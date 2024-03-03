@@ -1,10 +1,8 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FC } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { FC } from 'react';
 
-import { SearchParamsEnum } from 'enums';
+import { useSearch } from 'hooks';
 import SearchIcon from 'icons/SearchIcon';
 
 type Props = {
@@ -12,22 +10,7 @@ type Props = {
 };
 
 const Search: FC<Props> = ({ placeholder }) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-
-  const handleSearch = useDebouncedCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const params = new URLSearchParams(searchParams);
-      if (event.target.value) {
-        params.set(SearchParamsEnum.QUERY, event.target.value);
-      } else {
-        params.delete(SearchParamsEnum.QUERY);
-      }
-      replace(`${pathname}?${params.toString()}`);
-    },
-    500,
-  );
+  const { handleSearch, defaultValue } = useSearch({ decounceTime: 500 });
 
   return (
     <div className='relative'>
@@ -39,7 +22,7 @@ const Search: FC<Props> = ({ placeholder }) => {
         type='search'
         placeholder={placeholder}
         className='block bg-dark-blue rounded-md w-56 h-10 px-4 ps-10 text-sm font-semibold text-grey focus:ring-beige focus:border-beige'
-        defaultValue={searchParams.get(SearchParamsEnum.QUERY)?.toString()}
+        defaultValue={defaultValue}
       />
     </div>
   );
