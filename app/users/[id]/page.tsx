@@ -1,19 +1,8 @@
+import Leaderboard from 'app/ui/Leaderboard';
 import { RouteParams } from 'types';
-import { USERS_SEARCH_PLACEHOLDER } from 'utils';
-import Search from '../../ui/Search';
-import Table from '../../ui/Table';
 
-const UsersPage = async ({ params, searchParams }: RouteParams) => {
-  const query = searchParams?.query || '';
-  const page = Number(searchParams?.page) || 1;
-  return (
-    <>
-      <Table userId={params.id} query={query} page={page} />
-      <div>
-        <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
-      </div>
-    </>
-  );
+const UsersInfo = ({ params, searchParams }: RouteParams) => {
+  return <Leaderboard params={params} searchParams={searchParams} />;
 };
 
-export default UsersPage;
+export default UsersInfo;
