@@ -1,5 +1,5 @@
 import users from 'data/users.json';
 
 export const GET = async () => {
-  return Response.json(users);
+  return Response.json(users[0].id);
 };

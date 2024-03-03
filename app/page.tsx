@@ -1,11 +1,9 @@
 import { redirect } from 'next/navigation';
 
-import { loadUserList } from 'utils';
+import { loadInitialUserId } from 'utils';
 
 const Home = async () => {
-  const users = await loadUserList();
-
-  const initialUserId = users[0].id;
+  const initialUserId = await loadInitialUserId();
   redirect(`${process.env.BASE_URL}/users/${initialUserId}`);
 };
 

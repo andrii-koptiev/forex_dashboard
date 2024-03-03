@@ -1,24 +1,32 @@
-import page from 'app/page';
+import LeaderboardIcon from 'icons/LeaderboardIcon';
 import { RouteParams } from 'types';
-import { USERS_SEARCH_PLACEHOLDER } from 'utils';
+import { LEADERBOARD_HEADER_NAME, USERS_SEARCH_PLACEHOLDER } from 'utils';
 import Search from './Search';
 import Table from './Table';
 
-type Props = {
-  searchParams: RouteParams['searchParams'];
-  params: RouteParams['params'];
-};
-
-const Leaderboard = ({ params, searchParams }: Props) => {
+const Leaderboard = ({ params, searchParams }: RouteParams) => {
   const query = searchParams?.query || '';
   const page = Number(searchParams?.page) || 1;
   return (
-    <>
-      <Table userId={params.id} query={query} page={page} />
-      <div>
-        <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
+    <div
+      className={`user-info-section-container user-info-section-container-leaderboard`}
+    >
+      <div className='user-info-section-header-container'>
+        <LeaderboardIcon />
+        <div className='user-info-section-header-name'>
+          {LEADERBOARD_HEADER_NAME}
+        </div>
       </div>
-    </>
+
+      <div className='user-info-section-top-bar-actions'>
+        <div>Select</div>
+        <div>
+          <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
+        </div>
+      </div>
+
+      <Table userId={params.id} query={query} page={page} />
+    </div>
   );
 };
 
