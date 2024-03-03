@@ -1,10 +1,11 @@
 import { redirect } from 'next/navigation';
 
-import { loadInitialUserId } from 'utils';
+import { getInitialRedirectUrl } from 'utils';
 
 const Home = async () => {
-  const initialUserId = await loadInitialUserId();
-  redirect(`${process.env.BASE_URL}/users/${initialUserId}`);
+  const url = await getInitialRedirectUrl();
+
+  redirect(url);
 };
 
 export default Home;

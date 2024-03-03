@@ -9,7 +9,7 @@ type UseSearchProps = {
 
 type UseSearchReturnType = {
   handleSearch: DebouncedState<(event: ChangeEvent<HTMLInputElement>) => void>;
-  defaultValue: string | undefined;
+  defaultValue?: string;
 };
 
 export const useSearch = ({

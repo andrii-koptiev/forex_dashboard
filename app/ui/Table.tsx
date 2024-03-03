@@ -2,16 +2,20 @@ import { UsersTableColumnNameEnum } from 'enums';
 import { formatCurrency } from 'utils';
 import { loadFilteredUserList } from 'utils/api-helpers';
 
-const Table = async ({
-  userId,
-  query,
-  page,
-}: {
+type Props = {
   userId: string;
+  pageSize: number;
   query: string;
   page: number;
-}) => {
-  const filteredUsers = await loadFilteredUserList(userId, query, page);
+};
+
+const Table = async ({ userId, pageSize, query, page }: Props) => {
+  const filteredUsers = await loadFilteredUserList({
+    userId,
+    query,
+    pageSize,
+    page,
+  });
 
   return (
     <div className='relative overflow-x-auto sm:rounded-md'>
