@@ -30,6 +30,7 @@ const Select: FC<Props> = ({
       ) : null}
 
       <select
+        id='select'
         className={`bg-dark-blue text-sm font-semibold text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
         defaultValue={defaultValue}
         onChange={handleChange}
