@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FC } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
+import { SearchParamsEnum } from 'enums';
 import SearchIcon from 'icons/SearchIcon';
 
 type Props = {
@@ -19,14 +20,13 @@ const Search: FC<Props> = ({ placeholder }) => {
     (event: ChangeEvent<HTMLInputElement>) => {
       const params = new URLSearchParams(searchParams);
       if (event.target.value) {
-        params.set('query', event.target.value);
-        params.set('page', '2');
+        params.set(SearchParamsEnum.QUERY, event.target.value);
       } else {
-        params.delete('query');
+        params.delete(SearchParamsEnum.QUERY);
       }
       replace(`${pathname}?${params.toString()}`);
     },
-    300,
+    500,
   );
 
   return (
@@ -39,7 +39,7 @@ const Search: FC<Props> = ({ placeholder }) => {
         type='search'
         placeholder={placeholder}
         className='block bg-dark-blue rounded-md w-56 h-10 px-4 ps-10 text-sm font-semibold text-grey focus:ring-beige focus:border-beige'
-        defaultValue={searchParams.get('query')?.toString()}
+        defaultValue={searchParams.get(SearchParamsEnum.QUERY)?.toString()}
       />
     </div>
   );

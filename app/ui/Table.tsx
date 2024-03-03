@@ -3,13 +3,13 @@ import { loadFilteredUserList } from 'utils/helpers';
 const Table = async ({
   userId,
   query,
-  currentPage,
+  page,
 }: {
   userId: string;
   query: string;
-  currentPage: number;
+  page: number;
 }) => {
-  const filteredUsers = await loadFilteredUserList(userId, query, currentPage);
+  const filteredUsers = await loadFilteredUserList(userId, query, page);
 
   return (
     <div>

@@ -1,12 +1,10 @@
 import users from 'data/users.json';
+import { SearchParamsEnum } from 'enums';
 import { type NextRequest } from 'next/server';
 
-export const GET = async (
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) => {
+export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get('query');
+  const query = searchParams.get(SearchParamsEnum.QUERY);
 
   if (query) {
     const filtered = users.filter((user) =>
