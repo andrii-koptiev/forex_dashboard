@@ -4,16 +4,16 @@ import { ChangeEvent } from 'react';
 import { DebouncedState, useDebouncedCallback } from 'use-debounce';
 
 type UseSearchProps = {
-  decounceTime: number;
+  debounceTime: number;
 };
 
 type UseSearchReturnType = {
   handleSearch: DebouncedState<(event: ChangeEvent<HTMLInputElement>) => void>;
-  defaultValue?: string;
+  defaultSearchValue?: string;
 };
 
 export const useSearch = ({
-  decounceTime,
+  debounceTime,
 }: UseSearchProps): UseSearchReturnType => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -23,16 +23,17 @@ export const useSearch = ({
     (event: ChangeEvent<HTMLInputElement>) => {
       const params = new URLSearchParams(searchParams);
       if (event.target.value) {
+        params.set(SearchParamsEnum.PAGE, '1');
         params.set(SearchParamsEnum.QUERY, event.target.value);
       } else {
         params.delete(SearchParamsEnum.QUERY);
       }
       replace(`${pathname}?${params.toString()}`);
     },
-    decounceTime,
+    debounceTime,
   );
 
-  const defaultValue = searchParams.get(SearchParamsEnum.QUERY)?.toString();
+  const defaultSearchValue = searchParams.get(SearchParamsEnum.QUERY)?.toString();
 
-  return { handleSearch, defaultValue };
+  return { handleSearch, defaultSearchValue };
 };

@@ -3,7 +3,12 @@ import { SearchParamsEnum } from 'enums';
 import { chunk } from 'lodash';
 import { type NextRequest } from 'next/server';
 import { User } from 'types';
-import { DEFAULT_PAGE_SIZE, formatUsersData, getFromToUsers } from 'utils';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  formatUsersData,
+  getFromToUsers,
+} from 'utils';
 
 export const GET = async (request: NextRequest) => {
   const formattedUsers = formatUsersData(users);
@@ -13,7 +18,7 @@ export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
   const pageSize =
     searchParams.get(SearchParamsEnum.PAGE_SIZE) || DEFAULT_PAGE_SIZE;
-  const page = searchParams.get(SearchParamsEnum.PAGE) || 1;
+  const page = searchParams.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
   const query = searchParams.get(SearchParamsEnum.QUERY);
 
   if (query) {
@@ -26,11 +31,11 @@ export const GET = async (request: NextRequest) => {
     chunkedUsers = chunk(filteredUsers, Number(pageSize));
   }
 
-  const resultUsers = chunkedUsers[Number(page) - 1];
+  const resultUsers = chunkedUsers[Number(page) - 1] || [];
   const totalFilteredUsers = filteredUsers.length;
   const paginationButtons = chunkedUsers.map((_, i) => i + 1);
   const displayedFromTo = getFromToUsers(
-    chunkedUsers[Number(page) - 1],
+    chunkedUsers[Number(page) - 1] || [],
     filteredUsers,
   );
 

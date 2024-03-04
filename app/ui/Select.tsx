@@ -17,7 +17,7 @@ const Select: FC<Props> = ({
   rigthLabelName,
   selectWidth = 16,
 }) => {
-  const { defaultValue, handleChange } = useSelect();
+  const { defaultPageSize, handleChange } = useSelect();
   return (
     <form className='flex gap-2.5 h-10 items-center'>
       {leftLabelName ? (
@@ -32,7 +32,7 @@ const Select: FC<Props> = ({
       <select
         id='select'
         className={`bg-dark-blue text-sm font-semibold text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
-        defaultValue={defaultValue}
+        defaultValue={defaultPageSize}
         onChange={handleChange}
       >
         {options.map((option) => (
