@@ -7,21 +7,30 @@ type RequestParams = {
   page: number;
 };
 
+type ApiResponce = {
+  users: User[];
+  pagination: {
+    buttons: number[];
+    totalUsers: number;
+    displayedInfo: number[];
+  };
+};
+
 export const loadFilteredUserList = async ({
   pageSize,
   page,
   query,
   userId,
 }: RequestParams) => {
-  const data = await fetch(
+  const res = await fetch(
     `${process.env.BASE_URL}/api/users/${userId}?query=${query}&page=${page}&pageSize=${pageSize}`,
     {
       cache: 'no-store',
     },
   );
-  const users: User[] = await data.json();
+  const data: ApiResponce = await res.json();
 
-  return users;
+  return data;
 };
 
 export const loadInitialUserId = async () => {

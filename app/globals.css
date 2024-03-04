@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .sm-text-grey {
+    @apply text-sm font-semibold text-grey;
+  }
+
   .user-info-section-container {
     @apply w-1200px rounded-lg bg-dark-green px-5 py-2.5;
   }
@@ -20,5 +24,9 @@
   }
   .user-info-section-top-bar-actions {
     @apply flex justify-between mb-2.5;
+  }
+
+  .pagination-button {
+    @apply bg-green-700 px-2 py-1 rounded-sm capitalize;
   }
 }

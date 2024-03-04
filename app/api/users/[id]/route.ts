@@ -2,10 +2,13 @@ import users from 'data/users.json';
 import { SearchParamsEnum } from 'enums';
 import { chunk } from 'lodash';
 import { type NextRequest } from 'next/server';
-import { DEFAULT_PAGE_SIZE, formatUsersData } from 'utils';
+import { User } from 'types';
+import { DEFAULT_PAGE_SIZE, formatUsersData, getFromToUsers } from 'utils';
 
 export const GET = async (request: NextRequest) => {
-  const calculatedUsers = formatUsersData(users);
+  const formattedUsers = formatUsersData(users);
+  let filteredUsers = formattedUsers;
+  let chunkedUsers: User[][] = [];
 
   const searchParams = request.nextUrl.searchParams;
   const pageSize =
@@ -13,15 +16,30 @@ export const GET = async (request: NextRequest) => {
   const page = searchParams.get(SearchParamsEnum.PAGE) || 1;
   const query = searchParams.get(SearchParamsEnum.QUERY);
 
-  const chunkedUsers = chunk(calculatedUsers, Number(pageSize));
+  if (query) {
+    filteredUsers = formattedUsers.filter((user) =>
+      user.fullName.toLowerCase().includes(query.toLowerCase()),
+    );
+  }
 
-  // if (query) {
-  //   const filtered = calculatedUsers.filter((user) =>
-  //     user.fullName.toLowerCase().includes(query.toLowerCase()),
-  //   );
+  if (filteredUsers.length) {
+    chunkedUsers = chunk(filteredUsers, Number(pageSize));
+  }
 
-  //   return Response.json(filtered);
-  // }
+  const resultUsers = chunkedUsers[Number(page) - 1];
+  const totalFilteredUsers = filteredUsers.length;
+  const paginationButtons = chunkedUsers.map((_, i) => i + 1);
+  const displayedFromTo = getFromToUsers(
+    chunkedUsers[Number(page) - 1],
+    filteredUsers,
+  );
 
-  return Response.json(chunkedUsers[Number(page) - 1]);
+  return Response.json({
+    users: resultUsers,
+    pagination: {
+      totalUsers: totalFilteredUsers,
+      buttons: paginationButtons,
+      displayedInfo: displayedFromTo,
+    },
+  });
 };
