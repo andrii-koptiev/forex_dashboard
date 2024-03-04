@@ -6,17 +6,28 @@ import Sort from './Sort';
 
 type Props = {
   userId: string;
-  pageSize: number;
-  query: string;
-  page: number;
+  pageSize: string;
+  page: string;
+  query?: string;
+  sortBy?: string;
+  sortOrder?: string;
 };
 
-const Table = async ({ userId, pageSize, query, page }: Props) => {
+const Table = async ({
+  userId,
+  pageSize,
+  query,
+  page,
+  sortBy,
+  sortOrder,
+}: Props) => {
   const { users, pagination } = await loadFilteredUserList({
     userId,
     query,
     pageSize,
     page,
+    sortBy,
+    sortOrder,
   });
 
   return (

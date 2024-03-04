@@ -1,4 +1,4 @@
-export interface User {
+export interface FormattedUserDB {
   id: string;
   fullName: string;
   profit: number;

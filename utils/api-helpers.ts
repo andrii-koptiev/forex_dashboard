@@ -1,10 +1,13 @@
+import { SearchParamsEnum } from 'enums';
 import { User, UserData } from 'types';
 
 type RequestParams = {
   userId: string;
-  pageSize: number;
-  query: string;
-  page: number;
+  pageSize: string;
+  page: string;
+  query?: string;
+  sortBy?: string;
+  sortOrder?: string;
 };
 
 type ApiResponce = {
@@ -17,17 +20,30 @@ type ApiResponce = {
 };
 
 export const loadFilteredUserList = async ({
+  userId,
   pageSize,
   page,
   query,
-  userId,
+  sortBy,
+  sortOrder,
 }: RequestParams) => {
-  const res = await fetch(
-    `${process.env.BASE_URL}/api/users/${userId}?query=${query}&page=${page}&pageSize=${pageSize}`,
-    {
-      cache: 'no-store',
-    },
-  );
+  let url = `${process.env.BASE_URL}/api/users/${userId}?${SearchParamsEnum.PAGE}=${page}&${SearchParamsEnum.PAGE_SIZE}=${pageSize}`;
+
+  if (query !== undefined) {
+    url += `&${SearchParamsEnum.QUERY}=${query}`;
+  }
+
+  if (sortBy !== undefined) {
+    url += `&${SearchParamsEnum.SORT_BY}=${sortBy}`;
+  }
+
+  if (sortOrder !== undefined) {
+    url += `&${SearchParamsEnum.SORT_ORDER}=${sortOrder}`;
+  }
+
+  const res = await fetch(url, {
+    cache: 'no-store',
+  });
   const data: ApiResponce = await res.json();
 
   return data;
