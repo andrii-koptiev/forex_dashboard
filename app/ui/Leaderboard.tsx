@@ -8,6 +8,7 @@ import {
   USERS_SEARCH_PLACEHOLDER,
   getPageSizeSelectOptions,
 } from 'utils';
+
 import Search from './Search';
 import Select from './Select';
 import Table from './Table';
@@ -34,13 +35,15 @@ const Leaderboard = ({ params, searchParams }: RouteParams) => {
           leftLabelName={PAGE_SIZE_SELECT_LEFT_LABEL_NAME}
           rigthLabelName={PAGE_SIZE_SELECT_RIGHT_LABEL_NAME}
         />
-        <div>
           <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
-        </div>
       </div>
-
-      <Table userId={params.id} query={query} page={page} pageSize={pageSize} />
-    </div>
+        <Table
+          userId={params.id}
+          query={query}
+          page={page}
+          pageSize={pageSize}
+        />
+      </div>
   );
 };
 

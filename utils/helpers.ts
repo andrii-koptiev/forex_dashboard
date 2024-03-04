@@ -57,3 +57,19 @@ export const getInitialRedirectUrl = async (): Promise<string> => {
 
   return `${process.env.BASE_URL}/users/${initialUserId}?${SearchParamsEnum.PAGE_SIZE}=${initialPageSize}&${SearchParamsEnum.PAGE}=${initialPage}`;
 };
+
+export const getFromToUsers = (chunked: User[], filtered: User[]): number[] => {
+  if (!chunked.length || !filtered.length) {
+    return [];
+  }
+
+  const firstChunkedUserId = chunked[0]?.id;
+  const lastChunkedUserId = chunked.at(-1)?.id;
+
+  const fromIndex = filtered.findIndex(
+    (user) => user.id === firstChunkedUserId,
+  );
+  const toIndex = filtered.findIndex((user) => user.id === lastChunkedUserId);
+
+  return [fromIndex + 1, toIndex + 1];
+};
