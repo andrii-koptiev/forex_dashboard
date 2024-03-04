@@ -2,8 +2,8 @@ import { SVGProps } from 'react';
 const SortDescIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    width={props.width || '7px'}
-    height={props.height || '4px'}
+    width={'7px'}
+    height={'4px'}
     fill='none'
     {...props}
   >

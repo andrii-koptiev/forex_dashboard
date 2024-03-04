@@ -1,29 +1,29 @@
 'use client';
 import { SortOrderEnum, UsersTableColumnNameEnum } from 'enums';
+import { useSort } from 'hooks';
 import SortAscIcon from 'icons/SortAscIcon';
 import SortDescIcon from 'icons/SortDescIcon';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 type Props = {
   sortBy: UsersTableColumnNameEnum;
 };
 
-export const Sort: FC<Props> = () => {
-  const [sortOrder, setSortOrder] = useState<SortOrderEnum>(SortOrderEnum.NONE);
-
-  const onAscSortClick = () => setSortOrder(SortOrderEnum.ASC);
-  const onDescSortClick = () => setSortOrder(SortOrderEnum.DESC);
+export const Sort: FC<Props> = ({ sortBy }) => {
+  const { handleSort, isSortActive } = useSort({ sortBy });
 
   return (
     <div className='flex flex-col gap-1'>
-      <button onClick={onAscSortClick}>
+      <button onClick={() => handleSort(SortOrderEnum.ASC)}>
         <SortAscIcon
-          fill={sortOrder === SortOrderEnum.ASC ? '#0FC2C0' : undefined}
+          fill={isSortActive(sortBy, SortOrderEnum.ASC) ? '#0FC2C0' : undefined}
         />
       </button>
-      <button onClick={onDescSortClick}>
+      <button onClick={() => handleSort(SortOrderEnum.DESC)}>
         <SortDescIcon
-          fill={sortOrder === SortOrderEnum.DESC ? '#0FC2C0' : undefined}
+          fill={
+            isSortActive(sortBy, SortOrderEnum.DESC) ? '#0FC2C0' : undefined
+          }
         />
       </button>
     </div>
