@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { useSearch } from 'hooks';
 import SearchIcon from 'icons/SearchIcon';
@@ -28,4 +28,4 @@ const Search: FC<Props> = ({ placeholder }) => {
   );
 };
 
-export default Search;
+export default memo(Search);

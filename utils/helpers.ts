@@ -3,6 +3,7 @@ import {
   SortOrderEnum,
   UsersTableColumnNameEnum,
 } from 'enums';
+import { use } from 'react';
 import { SelectOption, User } from 'types';
 import { ApiResponceData, FormattedUserDB, UserDB } from 'types/api-types';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
@@ -80,6 +81,22 @@ export const getFromToUsers = (
   const toIndex = filtered.findIndex((user) => user.id === lastChunkedUserId);
 
   return [fromIndex + 1, toIndex + 1];
+};
+
+export const getChunckedUsers = (
+  users: FormattedUserDB[],
+  chunkSize: number,
+): FormattedUserDB[][] => {
+  if (!users.length) {
+    return [];
+  }
+  const result: FormattedUserDB[][] = [];
+
+  for (let i = 0; i < users.length; i += chunkSize) {
+    result.push(users.slice(i, i + chunkSize));
+  }
+
+  return result;
 };
 
 export const sortUsersBy = (

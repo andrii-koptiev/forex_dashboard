@@ -30,7 +30,7 @@ export const usePagination = ({
   const currentPage = params.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
 
   const getIsButtonActive = useCallback(
-    (page: string) => page === currentPage,
+    (page: string) => page ===String(currentPage),
     [currentPage],
   );
 

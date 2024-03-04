@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  display: flex;
+  justify-content: center;
+  padding: 150px 0;
+}
+
 @layer components {
   .sm-text-grey {
     @apply text-sm font-semibold text-grey;

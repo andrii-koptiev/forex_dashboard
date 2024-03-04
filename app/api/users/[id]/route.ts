@@ -1,12 +1,12 @@
 import users from 'data/users.json';
 import { SearchParamsEnum } from 'enums';
-import { chunk } from 'lodash';
 import { type NextRequest } from 'next/server';
 import { FormattedUserDB } from 'types/api-types';
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   formatUsersData,
+  getChunckedUsers,
   getPaginationData,
   sortUsersBy,
 } from 'utils';
@@ -29,12 +29,8 @@ export const GET = async (request: NextRequest) => {
         user.fullName.toLowerCase().includes(query.toLowerCase()),
       )
     : formattedUsers;
-
   filteredUsers = sortUsersBy(filteredUsers, sortBy, sortOrder);
-
-  if (filteredUsers.length) {
-    chunkedUsers = chunk(filteredUsers, Number(pageSize));
-  }
+  chunkedUsers = getChunckedUsers(filteredUsers, Number(pageSize));
 
   const resultUsers = chunkedUsers[Number(page) - 1] || [];
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSelect } from 'hooks';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { SelectOption } from 'types';
 
 type Props = {
@@ -51,4 +51,4 @@ const Select: FC<Props> = ({
   );
 };
 
-export default Select;
+export default memo(Select);

@@ -3,7 +3,7 @@ import { SortOrderEnum, UsersTableColumnNameEnum } from 'enums';
 import { useSort } from 'hooks';
 import SortAscIcon from 'icons/SortAscIcon';
 import SortDescIcon from 'icons/SortDescIcon';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 type Props = {
   sortBy: UsersTableColumnNameEnum;
@@ -30,4 +30,4 @@ export const Sort: FC<Props> = ({ sortBy }) => {
   );
 };
 
-export default Sort;
+export default memo(Sort);
