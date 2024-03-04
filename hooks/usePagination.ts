@@ -7,6 +7,7 @@ import { DEFAULT_PAGE } from 'utils';
 type UsePaginationProps = {
   totalUsers: DataResponce['pagination']['totalUsers'];
   displayedInfo: DataResponce['pagination']['displayedInfo'];
+  buttons: DataResponce['pagination']['buttons'];
 };
 
 type UsePaginationReturnType = {
@@ -18,6 +19,7 @@ type UsePaginationReturnType = {
 export const usePagination = ({
   totalUsers,
   displayedInfo,
+  buttons,
 }: UsePaginationProps): UsePaginationReturnType => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -38,9 +40,21 @@ export const usePagination = ({
   const handleClick = useCallback(
     (buttonType: PaginationButtonTypeEnum, page?: string) => {
       if (!page) {
-        buttonType === PaginationButtonTypeEnum.PREV
-          ? params.set(SearchParamsEnum.PAGE, String(Number(currentPage) - 1))
-          : params.set(SearchParamsEnum.PAGE, String(Number(currentPage) + 1));
+        const minPage = 1;
+        const maxPage = buttons.length;
+        if (buttonType === PaginationButtonTypeEnum.PREV) {
+          params.set(
+            SearchParamsEnum.PAGE,
+            String(Number(currentPage) - 1 || minPage),
+          );
+        } else {
+          Number(currentPage) > maxPage - 1
+            ? params.set(SearchParamsEnum.PAGE, String(maxPage))
+            : params.set(
+                SearchParamsEnum.PAGE,
+                String(Number(currentPage) + 1),
+              );
+        }
       } else {
         params.set(SearchParamsEnum.PAGE, page);
       }
