@@ -1,4 +1,4 @@
-import { SelectTypeEnum } from 'enums';
+import { InfoSectionTypeEnum, SelectTypeEnum } from 'enums';
 import OverviewIcon from 'icons/OverviewIcon';
 
 import {
@@ -6,6 +6,7 @@ import {
   USER_SELECT_LEFT_LABEL_NAME,
   loadSelectedUser,
 } from 'utils';
+import InfoSection from './InfoSection';
 import Select from './Select';
 
 type Props = {
@@ -32,6 +33,23 @@ const Overview = async ({ userId }: Props) => {
           selectWidth={40}
           selectedUser={selectedUser}
         />
+      </div>
+      <div className='flex w-full justify-between'>
+        <div>Reachart</div>
+        <div className='flex flex-col gap-4'>
+          <InfoSection
+            type={InfoSectionTypeEnum.PROFIT}
+            amount={selectedUser.profit}
+          />
+          <InfoSection
+            type={InfoSectionTypeEnum.LOSS}
+            amount={selectedUser.loss}
+          />
+          <InfoSection
+            type={InfoSectionTypeEnum.BALANCE}
+            amount={selectedUser.balance}
+          />
+        </div>
       </div>
     </div>
   );

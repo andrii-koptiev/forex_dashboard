@@ -16,6 +16,7 @@ const config: Config = {
         'dark-grey': '#012030',
         beige: '#F2E3D5',
         grey: '#A9A29C',
+        orange: '#F6742A',
         green: {
           700: '#013440',
           800: '#012F39',

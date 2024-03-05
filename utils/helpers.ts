@@ -33,8 +33,8 @@ export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
   });
 };
 
-export const formatCurrency = (amount: number): string => {
-  const absNumber = Math.abs(amount);
+export const formatCurrency = (amount: number, isAbs = true): string => {
+  const absNumber = isAbs ? Math.abs(amount) : amount;
   return absNumber.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',

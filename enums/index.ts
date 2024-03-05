@@ -1,3 +1,4 @@
+export * from './InfoSectionTypeEnum';
 export * from './PaginationButtonTypeEnum';
 export * from './SearchParamsEnum';
 export * from './SelectTypeEnum';
