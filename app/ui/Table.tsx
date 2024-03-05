@@ -37,47 +37,41 @@ const Table = async ({
         className='dynamic-table relative overflow-x-auto sm:rounded-md mb-4 dynamic-tbody'
         style={{ '--page-size': pageSize } as React.CSSProperties}
       >
-        <table className='w-full text-left'>
-          <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize'>
-            <tr>
-              {Object.values(UsersTableColumnNameEnum).map((columnName) => (
-                <th key={columnName} scope='col' className='px-2.5 h-10'>
-                  <div className='flex items-center justify-between'>
-                    {columnName}
-                    <Sort sortBy={columnName} />
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {users.length ? (
-              <>
-                {users.map((user, i, array) => (
-                  <tr
-                    key={user.id}
-                    className={`h-10 sm-text-grey  ${i % 2 === 0 ? 'bg-green-700' : 'bg-green-800'} ${i !== array.length - 1 ? 'border-b border-dark-grey' : ''}`}
-                  >
-                    <TableLink name={user.fullName} id={user.id} />
-                    <td className='px-2.5 w-64'>
-                      {formatCurrency(user.profit)}
-                    </td>
-                    <td className='px-2.5 w-64'>{formatCurrency(user.loss)}</td>
-                    <td
-                      className={`px-2.5 w-64 ${user.balance >= 0 ? 'text-light-green' : 'text-light-red'}`}
-                    >
-                      {formatCurrency(user.balance)}
-                    </td>
-                  </tr>
+        {users.length ? (
+          <table className='w-full text-left'>
+            <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize'>
+              <tr>
+                {Object.values(UsersTableColumnNameEnum).map((columnName) => (
+                  <th key={columnName} scope='col' className='px-2.5 h-10'>
+                    <div className='flex items-center justify-between'>
+                      {columnName}
+                      <Sort sortBy={columnName} />
+                    </div>
+                  </th>
                 ))}
-              </>
-            ) : (
-              <tr className='sm-text-grey'>
-                <th>{`${NO_RESULTS} "${query}"`}</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user, i, array) => (
+                <tr
+                  key={user.id}
+                  className={`h-10 sm-text-grey  ${i % 2 === 0 ? 'bg-green-700' : 'bg-green-800'} ${i !== array.length - 1 ? 'border-b border-dark-grey' : ''}`}
+                >
+                  <TableLink name={user.fullName} id={user.id} />
+                  <td className='px-2.5 w-64'>{formatCurrency(user.profit)}</td>
+                  <td className='px-2.5 w-64'>{formatCurrency(user.loss)}</td>
+                  <td
+                    className={`px-2.5 w-64 ${user.balance >= 0 ? 'text-light-green' : 'text-light-red'}`}
+                  >
+                    {formatCurrency(user.balance)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className='base-text-grey flex w-full h-full justify-center items-center'>{`${NO_RESULTS} "${query}"`}</div>
+        )}
       </div>
       {users.length ? <Pagination paginationData={pagination} /> : null}
     </>
