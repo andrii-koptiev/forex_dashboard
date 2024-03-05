@@ -13,14 +13,15 @@ body {
     @apply text-sm font-semibold text-grey;
   }
 
+  .base-text-grey {
+    @apply text-base font-semibold text-grey;
+  }
+
   .user-info-section-container {
-    @apply w-1200px rounded-lg bg-dark-green px-5 py-2.5;
+    @apply w-1200px rounded-lg bg-dark-green px-5 pt-2.5 pb-5;
   }
-  .user-info-section-container-leaderboard {
-    @apply h-600px;
-  }
-  .user-info-section-container-overview {
-    @apply h-370px;
+  .user-info-section-container {
+    @apply h-max;
   }
   .user-info-section-header-container {
     @apply flex items-center gap-2 mb-4;
@@ -30,6 +31,10 @@ body {
   }
   .user-info-section-top-bar-actions {
     @apply flex justify-between mb-2.5;
+  }
+
+  .dynamic-table {
+    height: calc(var(--page-size) * 40px + 40px);
   }
 
   .pagination-button {

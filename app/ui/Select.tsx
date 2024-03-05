@@ -31,7 +31,7 @@ const Select: FC<Props> = ({
 
       <select
         id='select'
-        className={`bg-dark-blue text-sm font-semibold text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
+        className={`bg-dark-blue sm-text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
         defaultValue={defaultPageSize}
         onChange={handleChange}
       >
@@ -40,10 +40,7 @@ const Select: FC<Props> = ({
         ))}
       </select>
       {rigthLabelName ? (
-        <label
-          htmlFor='select'
-          className='flex text-base font-semibold text-grey'
-        >
+        <label htmlFor='select' className='flex base-text-grey'>
           {rigthLabelName}
         </label>
       ) : null}

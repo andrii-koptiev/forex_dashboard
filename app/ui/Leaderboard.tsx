@@ -23,9 +23,7 @@ const Leaderboard = ({ params, searchParams }: RouteParams) => {
   const sortOrder = searchParams?.sortOrder;
 
   return (
-    <div
-      className={`user-info-section-container user-info-section-container-leaderboard`}
-    >
+    <div className={`user-info-section-container user-info-section-container`}>
       <div className='user-info-section-header-container'>
         <LeaderboardIcon />
         <div className='user-info-section-header-name'>
