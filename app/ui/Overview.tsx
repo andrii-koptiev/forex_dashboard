@@ -15,8 +15,6 @@ type Props = {
 const Overview = async ({ userId }: Props) => {
   const { selectedUser, userSelectOptions } = await loadSelectedUser(userId);
 
-  console.log('selected', selectedUser);
-
   return (
     <div className={`user-info-section-container user-info-section-container`}>
       <div className='user-info-section-header-container'>
@@ -32,6 +30,7 @@ const Overview = async ({ userId }: Props) => {
           options={userSelectOptions}
           leftLabelName={USER_SELECT_LEFT_LABEL_NAME}
           selectWidth={40}
+          selectedUser={selectedUser}
         />
       </div>
     </div>

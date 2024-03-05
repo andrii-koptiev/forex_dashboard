@@ -3,7 +3,7 @@
 import { SelectTypeEnum } from 'enums';
 import { useSelect } from 'hooks';
 import { FC, memo } from 'react';
-import { SelectOption } from 'types';
+import { SelectOption, User } from 'types';
 
 type Props = {
   options: SelectOption[];
@@ -11,6 +11,7 @@ type Props = {
   selectWidth?: number;
   leftLabelName?: string;
   rigthLabelName?: string;
+  selectedUser?: User;
 };
 
 const Select: FC<Props> = ({
@@ -19,8 +20,12 @@ const Select: FC<Props> = ({
   rigthLabelName,
   selectWidth = 16,
   type,
+  selectedUser,
 }) => {
-  const { defaultPageSize, handleChange } = useSelect({ selectType: type });
+  const { defaultValue, handleChange } = useSelect({
+    selectType: type,
+    selectedUser,
+  });
   return (
     <form className='flex gap-2.5 h-10 items-center'>
       {leftLabelName ? (
@@ -35,11 +40,11 @@ const Select: FC<Props> = ({
       <select
         id='select'
         className={`bg-dark-blue sm-text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
-        defaultValue={defaultPageSize}
+        defaultValue={defaultValue}
         onChange={handleChange}
       >
         {options.map((option) => (
-          <option key={option.value} selected={false}>
+          <option key={option.value} value={option.value}>
             {option.name}
           </option>
         ))}

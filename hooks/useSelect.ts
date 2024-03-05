@@ -1,22 +1,27 @@
 import { SearchParamsEnum, SelectTypeEnum } from 'enums';
+import { useReplaceParamsId } from 'hooks';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useCallback } from 'react';
+import { User } from 'types';
 
 type UseSelectProps = {
   selectType: SelectTypeEnum;
+  selectedUser?: User;
 };
 
 type UseSelectReturnType = {
   handleChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  defaultPageSize?: string;
+  defaultValue?: string;
 };
 
 export const useSelect = ({
   selectType,
+  selectedUser,
 }: UseSelectProps): UseSelectReturnType => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const { handleReplaceId } = useReplaceParamsId();
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -29,15 +34,16 @@ export const useSelect = ({
         }
         replace(`${pathname}?${params.toString()}`);
       } else {
-        // implement logic
+        handleReplaceId(event.target.value);
       }
     },
     [searchParams, pathname, replace],
   );
 
-  const defaultPageSize = searchParams
-    .get(SearchParamsEnum.PAGE_SIZE)
-    ?.toString();
+  const defaultValue =
+    selectType === SelectTypeEnum.USER_SELECT
+      ? selectedUser?.id
+      : searchParams.get(SearchParamsEnum.PAGE_SIZE)?.toString();
 
-  return { handleChange, defaultPageSize };
+  return { handleChange, defaultValue };
 };
