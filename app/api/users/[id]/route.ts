@@ -12,6 +12,7 @@ import {
 } from 'utils';
 
 export const GET = async (request: NextRequest) => {
+  console.log(request.body)
   const formattedUsers = formatUsersData(users);
   let filteredUsers: FormattedUserDB[] = [];
   let chunkedUsers: FormattedUserDB[][] = [];

@@ -49,6 +49,7 @@ export const loadFilteredUserList = async ({
   return data;
 };
 
+
 export const loadInitialUserId = async () => {
   const data = await fetch(`${process.env.BASE_URL}/api/users`, {
     cache: 'no-store',
