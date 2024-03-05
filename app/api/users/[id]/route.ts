@@ -1,10 +1,14 @@
 import users from 'data/users.json';
 
 import { type NextRequest } from 'next/server';
-import { formatUsersData, getActiveUser, getUsersSelectOption } from 'utils';
+import {
+  formatSelectedUsersData,
+  getActiveUser,
+  getUsersSelectOption,
+} from 'utils';
 
 export const GET = async (request: NextRequest) => {
-  const formattedUsers = formatUsersData(users);
+  const formattedUsers = formatSelectedUsersData(users);
   const userId = request.nextUrl.pathname.split('/').at(-1);
 
   const userSelectOptions = getUsersSelectOption(formattedUsers);

@@ -4,6 +4,4 @@ export interface User {
   profit: number;
   loss: number;
   balance: number;
-  profitData: number[];
-  lossData: number[];
 }

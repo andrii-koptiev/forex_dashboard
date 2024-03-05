@@ -1,5 +1,6 @@
 import { InfoSectionTypeEnum, SelectTypeEnum } from 'enums';
 import OverviewIcon from 'icons/OverviewIcon';
+import dynamic from 'next/dynamic';
 
 import {
   OVERVIEW_HEADER_NAME,
@@ -12,6 +13,8 @@ import Select from './Select';
 type Props = {
   userId: string;
 };
+
+const Chart = dynamic(() => import('./Chart'), { ssr: false });
 
 const Overview = async ({ userId }: Props) => {
   const { selectedUser, userSelectOptions } = await loadSelectedUser(userId);
@@ -35,7 +38,9 @@ const Overview = async ({ userId }: Props) => {
         />
       </div>
       <div className='flex w-full justify-between'>
-        <div>Reachart</div>
+        <div className='flex w-full h-full'>
+          <Chart data={selectedUser.chartData} />
+        </div>
         <div className='flex flex-col gap-4'>
           <InfoSection
             type={InfoSectionTypeEnum.PROFIT}

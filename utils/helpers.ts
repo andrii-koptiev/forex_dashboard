@@ -5,8 +5,10 @@ import {
 } from 'enums';
 import { SelectOption } from 'types';
 import {
+  ChartDataDB,
   FormattedUserDB,
   PaginationDB,
+  SelectedUserDB,
   UserDB,
   UserSelectOptionsDB,
 } from 'types/database';
@@ -14,6 +16,16 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
   Math.abs(dataArray.reduce((acc, curr) => acc + curr));
+
+const getChartData = (
+  profit: UserDB['profit'],
+  loss: UserDB['loss'],
+): ChartDataDB[] =>
+  profit.map((amount, i) => ({
+    name: String(i + 1),
+    profit: amount,
+    loss: Math.abs(loss[i]),
+  }));
 
 export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
   return users.map((user) => {
@@ -27,8 +39,23 @@ export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
       profit: profitAmount,
       loss: lossAmount,
       balance: balanceAmount,
-      profitData: user.profit,
-      lossData: user.loss,
+    };
+  });
+};
+
+export const formatSelectedUsersData = (users: UserDB[]): SelectedUserDB[] => {
+  return users.map((user) => {
+    const profitAmount = getSumFormArray(user.profit);
+    const lossAmount = getSumFormArray(user.loss);
+    const balanceAmount = profitAmount - lossAmount;
+
+    return {
+      id: user.id,
+      fullName: `${user.name} ${user.lastname}`,
+      profit: profitAmount,
+      loss: lossAmount,
+      balance: balanceAmount,
+      chartData: getChartData(user.profit, user.loss),
     };
   });
 };
@@ -170,11 +197,27 @@ export const getUsersSelectOption = (
 };
 
 export const getActiveUser = (
-  users: FormattedUserDB[],
-  id?: FormattedUserDB['id'],
-): FormattedUserDB | null => {
+  users: SelectedUserDB[],
+  id?: SelectedUserDB['id'],
+): SelectedUserDB | null => {
   if (!id) {
     return null;
   }
   return users.find((user) => user.id === id) || null;
+};
+
+export const formatChartYData = (number: number): string => {
+  if (number < 1000) {
+    return number.toString();
+  } else if (number < 1000000) {
+    const formattedNumber = (number / 1000).toFixed(1);
+    return formattedNumber.endsWith('.0')
+      ? formattedNumber.slice(0, -2) + 'k'
+      : formattedNumber + 'k';
+  } else {
+    const formattedNumber = (number / 1000000).toFixed(1);
+    return formattedNumber.endsWith('.0')
+      ? formattedNumber.slice(0, -2) + 'M'
+      : formattedNumber + 'M';
+  }
 };

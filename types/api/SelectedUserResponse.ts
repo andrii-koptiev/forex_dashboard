@@ -1,6 +1,6 @@
-import { SelectOption, User } from 'types';
+import { SelectOption, SelectedUser } from 'types';
 
 export interface SelectedUserResponse {
   userSelectOptions: SelectOption[];
-  selectedUser: User;
+  selectedUser: SelectedUser;
 }
