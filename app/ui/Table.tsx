@@ -1,12 +1,11 @@
 import { UsersTableColumnNameEnum } from 'enums';
 import { NO_RESULTS, formatCurrency } from 'utils';
-import { loadFilteredUserList } from 'utils/api-helpers';
+import { loadFilteredUsers } from 'utils/api-helpers';
 import Pagination from './Pagination';
 import Sort from './Sort';
 import TableLink from './TableLink';
 
 type Props = {
-  userId: string;
   pageSize: string;
   page: string;
   query?: string;
@@ -14,19 +13,11 @@ type Props = {
   sortOrder?: string;
 };
 
-const Table = async ({
-  userId,
-  pageSize,
-  query,
-  page,
-  sortBy,
-  sortOrder,
-}: Props) => {
-  const { users, pagination } = await loadFilteredUserList({
-    userId,
-    query,
+const Table = async ({ pageSize, query, page, sortBy, sortOrder }: Props) => {
+  const { users, pagination } = await loadFilteredUsers({
     pageSize,
     page,
+    query,
     sortBy,
     sortOrder,
   });

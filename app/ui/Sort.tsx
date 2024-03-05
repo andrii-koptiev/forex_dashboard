@@ -16,13 +16,13 @@ export const Sort: FC<Props> = ({ sortBy }) => {
     <div className='flex flex-col gap-1'>
       <button onClick={() => handleSort(SortOrderEnum.ASC)}>
         <SortAscIcon
-          fill={isSortActive(sortBy, SortOrderEnum.ASC) ? '#0FC2C0' : undefined}
+          fill={isSortActive(sortBy, SortOrderEnum.ASC) ? '#0369A1' : undefined}
         />
       </button>
       <button onClick={() => handleSort(SortOrderEnum.DESC)}>
         <SortDescIcon
           fill={
-            isSortActive(sortBy, SortOrderEnum.DESC) ? '#0FC2C0' : undefined
+            isSortActive(sortBy, SortOrderEnum.DESC) ? '#0369A1' : undefined
           }
         />
       </button>

@@ -1,6 +1,6 @@
 import { User } from 'types';
 
-export interface DataResponce {
+export interface FilteredUsersResponse {
   users: User[];
   pagination: {
     buttons: number[];

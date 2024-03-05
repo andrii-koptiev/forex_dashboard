@@ -1,13 +1,13 @@
 import { PaginationButtonTypeEnum, SearchParamsEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { DataResponce } from 'types';
+import { PaginationData } from 'types';
 import { DEFAULT_PAGE } from 'utils';
 
 type UsePaginationProps = {
-  totalUsers: DataResponce['pagination']['totalUsers'];
-  displayedInfo: DataResponce['pagination']['displayedInfo'];
-  buttons: DataResponce['pagination']['buttons'];
+  totalUsers: PaginationData['totalUsers'];
+  displayedInfo: PaginationData['displayedInfo'];
+  buttons: PaginationData['buttons'];
 };
 
 type UsePaginationReturnType = {
@@ -30,7 +30,7 @@ export const usePagination = ({
   const currentPage = params.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
 
   const getIsButtonActive = useCallback(
-    (page: string) => page ===String(currentPage),
+    (page: string) => page === String(currentPage),
     [currentPage],
   );
 

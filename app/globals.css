@@ -38,6 +38,6 @@ body {
   }
 
   .pagination-button {
-    @apply bg-green-700 px-2 py-1 rounded-sm capitalize;
+    @apply bg-green-700 px-2 py-1 rounded-sm capitalize hover:bg-sky-700;
   }
 }

@@ -3,13 +3,29 @@ import {
   SortOrderEnum,
   UsersTableColumnNameEnum,
 } from 'enums';
-import { use } from 'react';
-import { SelectOption, User } from 'types';
-import { ApiResponceData, FormattedUserDB, UserDB } from 'types/api-types';
+import { SelectOption } from 'types';
+import {
+  ChartDataDB,
+  FormattedUserDB,
+  PaginationDB,
+  SelectedUserDB,
+  UserDB,
+  UserSelectOptionsDB,
+} from 'types/database';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
   Math.abs(dataArray.reduce((acc, curr) => acc + curr));
+
+const getChartData = (
+  profit: UserDB['profit'],
+  loss: UserDB['loss'],
+): ChartDataDB[] =>
+  profit.map((amount, i) => ({
+    name: String(i + 1),
+    profit: amount,
+    loss: Math.abs(loss[i]),
+  }));
 
 export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
   return users.map((user) => {
@@ -27,8 +43,25 @@ export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
   });
 };
 
-export const formatCurrency = (amount: number): string => {
-  const absNumber = Math.abs(amount);
+export const formatSelectedUsersData = (users: UserDB[]): SelectedUserDB[] => {
+  return users.map((user) => {
+    const profitAmount = getSumFormArray(user.profit);
+    const lossAmount = getSumFormArray(user.loss);
+    const balanceAmount = profitAmount - lossAmount;
+
+    return {
+      id: user.id,
+      fullName: `${user.name} ${user.lastname}`,
+      profit: profitAmount,
+      loss: lossAmount,
+      balance: balanceAmount,
+      chartData: getChartData(user.profit, user.loss),
+    };
+  });
+};
+
+export const formatCurrency = (amount: number, isAbs = true): string => {
+  const absNumber = isAbs ? Math.abs(amount) : amount;
   return absNumber.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -103,7 +136,7 @@ export const sortUsersBy = (
   users: FormattedUserDB[],
   sortBy: string | null,
   order: string | null,
-): User[] => {
+): FormattedUserDB[] => {
   if (!users.length) {
     return [];
   }
@@ -139,7 +172,7 @@ export const getPaginationData = (
   users: FormattedUserDB[],
   chunked: FormattedUserDB[][],
   page: string,
-): ApiResponceData['pagination'] => {
+): PaginationDB => {
   const totalFilteredUsers = users.length;
   const paginationButtons = chunked.map((_, i) => i + 1);
   const displayedFromTo = getFromToUsers(
@@ -151,4 +184,40 @@ export const getPaginationData = (
     buttons: paginationButtons,
     displayedInfo: displayedFromTo,
   };
+};
+
+export const getUsersSelectOption = (
+  users: FormattedUserDB[],
+): UserSelectOptionsDB[] => {
+  if (!users.length) {
+    return [];
+  }
+
+  return users.map((user) => ({ value: user.id, name: user.fullName }));
+};
+
+export const getActiveUser = (
+  users: SelectedUserDB[],
+  id?: SelectedUserDB['id'],
+): SelectedUserDB | null => {
+  if (!id) {
+    return null;
+  }
+  return users.find((user) => user.id === id) || null;
+};
+
+export const formatChartYData = (number: number): string => {
+  if (number < 1000) {
+    return number.toString();
+  } else if (number < 1000000) {
+    const formattedNumber = (number / 1000).toFixed(1);
+    return formattedNumber.endsWith('.0')
+      ? formattedNumber.slice(0, -2) + 'k'
+      : formattedNumber + 'k';
+  } else {
+    const formattedNumber = (number / 1000000).toFixed(1);
+    return formattedNumber.endsWith('.0')
+      ? formattedNumber.slice(0, -2) + 'M'
+      : formattedNumber + 'M';
+  }
 };
