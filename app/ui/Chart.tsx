@@ -2,6 +2,7 @@
 
 import { FC } from 'react';
 
+import CircleIcon from 'icons/CircleIcon';
 import {
   CartesianGrid,
   Legend,
@@ -11,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { ChartData } from 'types';
+import { ChartData, ChartLegendPayload } from 'types';
 import { formatChartYData } from 'utils';
 import ChartLegend from './ChartLegend';
 import ChartTooltip from './ChartTooltip';
@@ -21,6 +22,10 @@ type Props = {
 };
 
 const Chart: FC<Props> = ({ data }) => {
+  const legendPayload: ChartLegendPayload[] = [
+    { value: 'Profit', id: 'Profit', iconEl: <CircleIcon fill={'#0FC2C0'} /> },
+    { value: 'Loss', id: 'Loss', iconEl: <CircleIcon fill={'#FF3737'} /> },
+  ];
   return (
     <LineChart
       width={940}
@@ -44,7 +49,7 @@ const Chart: FC<Props> = ({ data }) => {
         domain={[0, 'dataMax + 20000']}
       />
       <Tooltip content={<ChartTooltip />} />
-      <Legend content={<ChartLegend />} />
+      <Legend payload={legendPayload} content={<ChartLegend />} />
 
       <Line
         type='linear'
@@ -70,6 +75,7 @@ const Chart: FC<Props> = ({ data }) => {
 // This is a hack to suppress the warning about missing defaultProps in recharts library as of version 2.12
 // @link https://github.com/recharts/recharts/issues/3615
 const error = console.error;
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 console.error = (...args: any) => {
   if (/defaultProps/.test(args[0])) return;
   error(...args);

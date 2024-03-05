@@ -2,6 +2,7 @@ import { formatCurrency } from 'utils';
 
 type Props = {
   active?: boolean;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   payload?: any[];
 };
 
