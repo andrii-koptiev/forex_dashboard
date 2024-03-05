@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { useSearch } from 'hooks';
 import SearchIcon from 'icons/SearchIcon';
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const Search: FC<Props> = ({ placeholder }) => {
-  const { handleSearch, defaultValue } = useSearch({ decounceTime: 500 });
+  const { handleSearch, defaultSearchValue } = useSearch({ debounceTime: 500 });
 
   return (
     <div className='relative'>
@@ -22,10 +22,10 @@ const Search: FC<Props> = ({ placeholder }) => {
         type='search'
         placeholder={placeholder}
         className='block bg-dark-blue rounded-md w-56 h-10 px-4 ps-10 text-sm font-semibold text-grey focus:ring-beige focus:border-beige'
-        defaultValue={defaultValue}
+        defaultValue={defaultSearchValue}
       />
     </div>
   );
 };
 
-export default Search;
+export default memo(Search);

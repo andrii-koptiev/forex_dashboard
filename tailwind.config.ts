@@ -27,6 +27,7 @@ const config: Config = {
         lg: '10px',
       },
       spacing: {
+        '40px': '40px',
         '370px': '370px',
         '600px': '600px',
         '1200px': '1200px',

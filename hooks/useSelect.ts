@@ -1,10 +1,10 @@
 import { SearchParamsEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 
 type UseSelectReturnType = {
   handleChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  defaultValue?: string;
+  defaultPageSize?: string;
 };
 
 export const useSelect = (): UseSelectReturnType => {
@@ -12,17 +12,20 @@ export const useSelect = (): UseSelectReturnType => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const params = new URLSearchParams(searchParams);
-    if (event.target.value) {
-      params.set(SearchParamsEnum.PAGE_SIZE, event.target.value);
-    } else {
-      params.delete(SearchParamsEnum.PAGE_SIZE);
-    }
-    replace(`${pathname}?${params.toString()}`);
-  };
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const params = new URLSearchParams(searchParams);
+      if (event.target.value) {
+        params.set(SearchParamsEnum.PAGE_SIZE, event.target.value);
+      } else {
+        params.delete(SearchParamsEnum.PAGE_SIZE);
+      }
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [searchParams, pathname, replace],
+  );
 
-  const defaultValue = searchParams.get(SearchParamsEnum.PAGE_SIZE)?.toString();
+  const defaultPageSize = searchParams.get(SearchParamsEnum.PAGE_SIZE)?.toString();
 
-  return { handleChange, defaultValue };
+  return { handleChange, defaultPageSize };
 };

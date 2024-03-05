@@ -13,6 +13,7 @@ export const Pagination: FC<Props> = ({ paginationData }) => {
   const { getInfoString, getIsButtonActive, handleClick } = usePagination({
     totalUsers: paginationData.totalUsers,
     displayedInfo: paginationData.displayedInfo,
+    buttons: paginationData.buttons,
   });
 
   return (

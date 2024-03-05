@@ -1,7 +1,7 @@
 'use client';
 
 import { useSelect } from 'hooks';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { SelectOption } from 'types';
 
 type Props = {
@@ -17,7 +17,7 @@ const Select: FC<Props> = ({
   rigthLabelName,
   selectWidth = 16,
 }) => {
-  const { defaultValue, handleChange } = useSelect();
+  const { defaultPageSize, handleChange } = useSelect();
   return (
     <form className='flex gap-2.5 h-10 items-center'>
       {leftLabelName ? (
@@ -31,8 +31,8 @@ const Select: FC<Props> = ({
 
       <select
         id='select'
-        className={`bg-dark-blue text-sm font-semibold text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
-        defaultValue={defaultValue}
+        className={`bg-dark-blue sm-text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
+        defaultValue={defaultPageSize}
         onChange={handleChange}
       >
         {options.map((option) => (
@@ -40,10 +40,7 @@ const Select: FC<Props> = ({
         ))}
       </select>
       {rigthLabelName ? (
-        <label
-          htmlFor='select'
-          className='flex text-base font-semibold text-grey'
-        >
+        <label htmlFor='select' className='flex base-text-grey'>
           {rigthLabelName}
         </label>
       ) : null}
@@ -51,4 +48,4 @@ const Select: FC<Props> = ({
   );
 };
 
-export default Select;
+export default memo(Select);
