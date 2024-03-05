@@ -3,14 +3,13 @@ import {
   SortOrderEnum,
   UsersTableColumnNameEnum,
 } from 'enums';
-import { use } from 'react';
-import { SelectOption, User } from 'types';
+import { SelectOption } from 'types';
 import {
-  ApiResponceData,
   FormattedUserDB,
+  PaginationDB,
   UserDB,
   UserSelectOptionsDB,
-} from 'types/api-types';
+} from 'types/database';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
@@ -146,7 +145,7 @@ export const getPaginationData = (
   users: FormattedUserDB[],
   chunked: FormattedUserDB[][],
   page: string,
-): ApiResponceData['pagination'] => {
+): PaginationDB => {
   const totalFilteredUsers = users.length;
   const paginationButtons = chunked.map((_, i) => i + 1);
   const displayedFromTo = getFromToUsers(

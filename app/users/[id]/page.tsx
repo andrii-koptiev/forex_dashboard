@@ -5,8 +5,14 @@ import { RouteParams } from 'types';
 const UsersInfo = ({ params, searchParams }: RouteParams) => {
   return (
     <div className='flex flex-col gap-9'>
-      <Leaderboard params={params} searchParams={searchParams} />
-      <Overview params={params} searchParams={searchParams} />
+      <Leaderboard
+        page={searchParams?.page}
+        pageSize={searchParams?.pageSize}
+        query={searchParams?.query}
+        sortBy={searchParams?.sortBy}
+        sortOrder={searchParams?.sortOrder}
+      />
+      <Overview userId={params.id} />
     </div>
   );
 };

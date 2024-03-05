@@ -2,14 +2,14 @@
 
 import { PaginationButtonTypeEnum } from 'enums';
 import { usePagination } from 'hooks';
-import { FC } from 'react';
-import { DataResponce } from 'types';
+import { FC, memo } from 'react';
+import { PaginationData } from 'types';
 
 type Props = {
-  paginationData: DataResponce['pagination'];
+  paginationData: PaginationData;
 };
 
-export const Pagination: FC<Props> = ({ paginationData }) => {
+const Pagination: FC<Props> = ({ paginationData }) => {
   const { getInfoString, getIsButtonActive, handleClick } = usePagination({
     totalUsers: paginationData.totalUsers,
     displayedInfo: paginationData.displayedInfo,
@@ -50,4 +50,4 @@ export const Pagination: FC<Props> = ({ paginationData }) => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);

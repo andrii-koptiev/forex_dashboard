@@ -1,5 +1,4 @@
 import LeaderboardIcon from 'icons/LeaderboardIcon';
-import { RouteParams } from 'types';
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
@@ -15,14 +14,16 @@ import Search from './Search';
 import Select from './Select';
 import Table from './Table';
 
-const Leaderboard = ({ params, searchParams }: RouteParams) => {
-  const selectOptions = getPageSizeSelectOptions(5, 20);
-  const pageSize = searchParams?.pageSize || String(DEFAULT_PAGE_SIZE);
-  const page = searchParams?.page || String(DEFAULT_PAGE);
-  const query = searchParams?.query;
-  const sortBy = searchParams?.sortBy;
-  const sortOrder = searchParams?.sortOrder;
+type Props = {
+  pageSize?: string;
+  query?: string;
+  page?: string;
+  sortBy?: string;
+  sortOrder?: string;
+};
 
+const Leaderboard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
+  const selectOptions = getPageSizeSelectOptions(5, 20);
   return (
     <div className={`user-info-section-container user-info-section-container`}>
       <div className='user-info-section-header-container'>
@@ -42,9 +43,8 @@ const Leaderboard = ({ params, searchParams }: RouteParams) => {
         <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
       </div>
       <Table
-        userId={params.id}
-        page={page}
-        pageSize={pageSize}
+        page={page || String(DEFAULT_PAGE)}
+        pageSize={pageSize || String(DEFAULT_PAGE_SIZE)}
         query={query}
         sortBy={sortBy}
         sortOrder={sortOrder}

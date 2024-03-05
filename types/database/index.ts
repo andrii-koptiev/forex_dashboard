@@ -1,4 +1,4 @@
 export * from './FormattedUserDB';
-export * from './ApiResponseData';
+export * from './PaginationDB';
 export * from './UserDB';
 export * from './UserSelectOptionsDB';

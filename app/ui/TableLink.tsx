@@ -16,7 +16,7 @@ const TableLink: FC<Props> = ({ name, id }) => {
   return (
     <th
       scope='row'
-      className={`px-2.5 cursor-pointer ${isActive ? 'text-light-green' : ''}`}
+      className={`px-2.5 cursor-pointer ${isActive ? 'text-sky-700' : ''}`}
       onClick={handleReplaceId}
     >
       {name}
