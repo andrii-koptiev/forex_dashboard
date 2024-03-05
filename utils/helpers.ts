@@ -5,7 +5,12 @@ import {
 } from 'enums';
 import { use } from 'react';
 import { SelectOption, User } from 'types';
-import { ApiResponceData, FormattedUserDB, UserDB } from 'types/api-types';
+import {
+  ApiResponceData,
+  FormattedUserDB,
+  UserDB,
+  UserSelectOptionsDB,
+} from 'types/api-types';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
@@ -23,6 +28,8 @@ export const formatUsersData = (users: UserDB[]): FormattedUserDB[] => {
       profit: profitAmount,
       loss: lossAmount,
       balance: balanceAmount,
+      profitData: user.profit,
+      lossData: user.loss,
     };
   });
 };
@@ -103,7 +110,7 @@ export const sortUsersBy = (
   users: FormattedUserDB[],
   sortBy: string | null,
   order: string | null,
-): User[] => {
+): FormattedUserDB[] => {
   if (!users.length) {
     return [];
   }
@@ -151,4 +158,24 @@ export const getPaginationData = (
     buttons: paginationButtons,
     displayedInfo: displayedFromTo,
   };
+};
+
+export const getUsersSelectOption = (
+  users: FormattedUserDB[],
+): UserSelectOptionsDB[] => {
+  if (!users.length) {
+    return [];
+  }
+
+  return users.map((user) => ({ value: user.id, name: user.fullName }));
+};
+
+export const getActiveUser = (
+  users: FormattedUserDB[],
+  id?: FormattedUserDB['id'],
+): FormattedUserDB | null => {
+  if (!id) {
+    return null;
+  }
+  return users.find((user) => user.id === id) || null;
 };

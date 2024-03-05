@@ -4,4 +4,6 @@ export interface FormattedUserDB {
   profit: number;
   loss: number;
   balance: number;
+  profitData: number[];
+  lossData: number[];
 }

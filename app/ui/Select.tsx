@@ -1,11 +1,13 @@
 'use client';
 
+import { SelectTypeEnum } from 'enums';
 import { useSelect } from 'hooks';
 import { FC, memo } from 'react';
 import { SelectOption } from 'types';
 
 type Props = {
   options: SelectOption[];
+  type: SelectTypeEnum;
   selectWidth?: number;
   leftLabelName?: string;
   rigthLabelName?: string;
@@ -16,8 +18,9 @@ const Select: FC<Props> = ({
   leftLabelName,
   rigthLabelName,
   selectWidth = 16,
+  type,
 }) => {
-  const { defaultPageSize, handleChange } = useSelect();
+  const { defaultPageSize, handleChange } = useSelect({ selectType: type });
   return (
     <form className='flex gap-2.5 h-10 items-center'>
       {leftLabelName ? (
@@ -36,7 +39,9 @@ const Select: FC<Props> = ({
         onChange={handleChange}
       >
         {options.map((option) => (
-          <option key={option.value}>{option.name}</option>
+          <option key={option.value} selected={false}>
+            {option.name}
+          </option>
         ))}
       </select>
       {rigthLabelName ? (

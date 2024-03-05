@@ -6,13 +6,14 @@ import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   formatUsersData,
+  getActiveUser,
   getChunckedUsers,
   getPaginationData,
+  getUsersSelectOption,
   sortUsersBy,
 } from 'utils';
 
 export const GET = async (request: NextRequest) => {
-  console.log(request.body)
   const formattedUsers = formatUsersData(users);
   let filteredUsers: FormattedUserDB[] = [];
   let chunkedUsers: FormattedUserDB[][] = [];
@@ -24,12 +25,14 @@ export const GET = async (request: NextRequest) => {
   const query = searchParams.get(SearchParamsEnum.QUERY);
   const sortBy = searchParams.get(SearchParamsEnum.SORT_BY);
   const sortOrder = searchParams.get(SearchParamsEnum.SORT_ORDER);
+  const userId = request.nextUrl.pathname.split('/').at(-1);
 
   filteredUsers = query
     ? formattedUsers.filter((user) =>
         user.fullName.toLowerCase().includes(query.toLowerCase()),
       )
     : formattedUsers;
+
   filteredUsers = sortUsersBy(filteredUsers, sortBy, sortOrder);
   chunkedUsers = getChunckedUsers(filteredUsers, Number(pageSize));
 
@@ -41,8 +44,13 @@ export const GET = async (request: NextRequest) => {
     String(page),
   );
 
+  const userSelectOptions = getUsersSelectOption(formattedUsers);
+  const selectedUser = getActiveUser(formattedUsers, userId);
+
   return Response.json({
     users: resultUsers,
     pagination: paginationData,
+    userSelectOptions: userSelectOptions,
+    activeUser: selectedUser,
   });
 };

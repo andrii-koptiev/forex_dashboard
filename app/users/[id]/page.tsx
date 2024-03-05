@@ -6,7 +6,7 @@ const UsersInfo = ({ params, searchParams }: RouteParams) => {
   return (
     <div className='flex flex-col gap-9'>
       <Leaderboard params={params} searchParams={searchParams} />
-      <Overview />
+      <Overview params={params} searchParams={searchParams} />
     </div>
   );
 };

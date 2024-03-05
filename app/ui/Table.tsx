@@ -1,6 +1,6 @@
 import { UsersTableColumnNameEnum } from 'enums';
 import { NO_RESULTS, formatCurrency } from 'utils';
-import { loadFilteredUserList } from 'utils/api-helpers';
+import { loadFilteredUserData } from 'utils/api-helpers';
 import Pagination from './Pagination';
 import Sort from './Sort';
 import TableLink from './TableLink';
@@ -22,7 +22,7 @@ const Table = async ({
   sortBy,
   sortOrder,
 }: Props) => {
-  const { users, pagination } = await loadFilteredUserList({
+  const { users, pagination } = await loadFilteredUserData({
     userId,
     query,
     pageSize,

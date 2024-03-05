@@ -10,6 +10,7 @@ import {
   getPageSizeSelectOptions,
 } from 'utils';
 
+import { SelectTypeEnum } from 'enums';
 import Search from './Search';
 import Select from './Select';
 import Table from './Table';
@@ -33,6 +34,7 @@ const Leaderboard = ({ params, searchParams }: RouteParams) => {
 
       <div className='user-info-section-top-bar-actions'>
         <Select
+          type={SelectTypeEnum.PAGE_SIZE_SELECT}
           options={selectOptions}
           leftLabelName={PAGE_SIZE_SELECT_LEFT_LABEL_NAME}
           rigthLabelName={PAGE_SIZE_SELECT_RIGHT_LABEL_NAME}

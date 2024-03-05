@@ -1,10 +1,10 @@
 import { SearchParamsEnum } from 'enums';
-import { User, UserData } from 'types';
+import { SelectOption, User, UserData } from 'types';
 
 type RequestParams = {
   userId: string;
-  pageSize: string;
-  page: string;
+  pageSize?: string;
+  page?: string;
   query?: string;
   sortBy?: string;
   sortOrder?: string;
@@ -12,6 +12,8 @@ type RequestParams = {
 
 type ApiResponce = {
   users: User[];
+  userSelectOptions: SelectOption[];
+  activeUser: User | null;
   pagination: {
     buttons: number[];
     totalUsers: number;
@@ -19,7 +21,7 @@ type ApiResponce = {
   };
 };
 
-export const loadFilteredUserList = async ({
+export const loadFilteredUserData = async ({
   userId,
   pageSize,
   page,
@@ -48,7 +50,6 @@ export const loadFilteredUserList = async ({
 
   return data;
 };
-
 
 export const loadInitialUserId = async () => {
   const data = await fetch(`${process.env.BASE_URL}/api/users`, {
