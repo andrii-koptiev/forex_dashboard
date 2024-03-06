@@ -49,10 +49,8 @@ button:focus {
   }
 
   .select {
-    width: 60px;
-    /* border-style: initial; */
-    /* outline-color: orange; */
-    @apply bg-dark-blue sm-text-grey rounded-md block p-2.5 focus-visible:outline-transparent;
+    width: 64px;
+    @apply bg-dark-blue sm-text-grey rounded-md block p-2.5 pr-0.5 border-r-10 border-solid border-dark-blue;
   }
 
   .user-select {
