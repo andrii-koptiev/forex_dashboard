@@ -39,7 +39,7 @@ const Select: FC<Props> = ({
 
       <select
         id='select'
-        className={`bg-dark-blue sm-text-grey rounded-md focus:ring-red-500 focus:border-red-500 block p-2.5 w-${selectWidth}`}
+        className={` select ${type === SelectTypeEnum.USER_SELECT ? 'user-select' : ''}`}
         defaultValue={defaultValue}
         onChange={handleChange}
       >
