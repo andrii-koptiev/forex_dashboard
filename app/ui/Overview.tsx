@@ -33,7 +33,6 @@ const Overview = async ({ userId }: Props) => {
           type={SelectTypeEnum.USER_SELECT}
           options={userSelectOptions}
           leftLabelName={USER_SELECT_LEFT_LABEL_NAME}
-          selectWidth={40}
           selectedUser={selectedUser}
         />
       </div>

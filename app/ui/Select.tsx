@@ -8,7 +8,6 @@ import { SelectOption, User } from 'types';
 type Props = {
   options: SelectOption[];
   type: SelectTypeEnum;
-  selectWidth?: number;
   leftLabelName?: string;
   rigthLabelName?: string;
   selectedUser?: User;
@@ -18,7 +17,6 @@ const Select: FC<Props> = ({
   options,
   leftLabelName,
   rigthLabelName,
-  selectWidth = 16,
   type,
   selectedUser,
 }) => {
