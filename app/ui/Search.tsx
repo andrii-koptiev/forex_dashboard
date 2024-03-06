@@ -18,6 +18,7 @@ const Search: FC<Props> = ({ placeholder }) => {
         <SearchIcon className='w-4 h-4 text-beige' />
       </div>
       <input
+        autoFocus={Boolean(defaultSearchValue)}
         onChange={handleSearch}
         type='search'
         placeholder={placeholder}
