@@ -1,3 +1,4 @@
+export * from './AppError';
 export * from './ChartData';
 export * from './ChartLegendPayload';
 export * from './PaginationData';

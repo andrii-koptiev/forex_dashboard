@@ -11,7 +11,7 @@ import {
   sortUsersBy,
 } from 'utils';
 
-export const GET = async (request: NextRequest) => {
+export const GET = (request: NextRequest) => {
   const formattedUsers = formatUsersData(users);
   let filteredUsers: FormattedUserDB[] = [];
   let chunkedUsers: FormattedUserDB[][] = [];
@@ -40,7 +40,6 @@ export const GET = async (request: NextRequest) => {
     chunkedUsers,
     String(page),
   );
-
 
   return Response.json({
     users: resultUsers,

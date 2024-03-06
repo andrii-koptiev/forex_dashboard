@@ -27,6 +27,9 @@ const config: Config = {
         md: '5px',
         lg: '10px',
       },
+      borderWidth: {
+        '10': '10px',
+      },
       spacing: {
         '40px': '40px',
         '370px': '370px',
