@@ -7,7 +7,7 @@ import {
   getUsersSelectOption,
 } from 'utils';
 
-export const GET = async (request: NextRequest) => {
+export const GET = (request: NextRequest) => {
   const formattedUsers = formatSelectedUsersData(users);
   const userId = request.nextUrl.pathname.split('/').at(-1);
 
