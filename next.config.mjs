@@ -3,9 +3,6 @@
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = {
-  output: 'export',
-  basePath: '/next-fpfx-react-test',
-};
+const nextConfig = {};
 
 export default nextConfig;
