@@ -1,5 +1,6 @@
 // @ts-check
-
+import { config } from 'dotenv';
+config();
 /**
  * @type {import('next').NextConfig}
  */
