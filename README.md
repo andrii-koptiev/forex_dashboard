@@ -1,3 +1,6 @@
+
+<img width="695" alt="Screenshot 2024-03-18 at 7 07 10 PM" src="https://github.com/andrii-koptiev/forex_dashboard/assets/94103251/b5a04990-ce8e-4336-98c6-000f71b28870">
+
 # Forex Dashboard - pet project:
 Fullstack web app. Forex traders dashboard.
 
@@ -16,5 +19,3 @@ Fullstack web app. Forex traders dashboard.
 
 #### Run
 clone => npm start => npm run dev => project will start on http://localhost:3000
-
-#### Demo Link
