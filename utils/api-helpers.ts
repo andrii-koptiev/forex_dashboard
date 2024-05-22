@@ -1,9 +1,5 @@
 import { SearchParamsEnum } from 'enums';
-import {
-  FilteredUsersResponse,
-  HomePageResponse,
-  SelectedUserResponse,
-} from 'types/api';
+import { FilteredUsersResponse, SelectedUserResponse } from 'types/api';
 import { COMMON_ERROR_MESSAGE } from 'utils';
 
 type RequestParams = {
@@ -43,20 +39,6 @@ export const loadFilteredUsers = async ({
   try {
     const data: FilteredUsersResponse = await res.json();
     return data;
-  } catch (e) {
-    throw new Error(COMMON_ERROR_MESSAGE);
-  }
-};
-
-export const loadInitialUserId = async () => {
-  const data = await fetch(`${process.env.BASE_URL}/api/homepage`, {
-    cache: 'no-store',
-  });
-
-  try {
-    const { initialUserId }: HomePageResponse = await data.json();
-
-    return initialUserId;
   } catch (e) {
     throw new Error(COMMON_ERROR_MESSAGE);
   }

@@ -1,6 +1,6 @@
 import { PaginationButtonTypeEnum, SearchParamsEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { PaginationData } from 'types';
 import { DEFAULT_PAGE } from 'utils';
 
@@ -25,7 +25,9 @@ export const usePagination = ({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const params = new URLSearchParams(searchParams);
+  const params = useMemo(() => {
+    return new URLSearchParams(searchParams);
+  }, [searchParams]);
 
   const currentPage = params.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
 
@@ -61,7 +63,7 @@ export const usePagination = ({
 
       replace(`${pathname}?${params.toString()}`);
     },
-    [currentPage, params, pathname, replace],
+    [buttons.length, currentPage, params, pathname, replace],
   );
 
   return { getInfoString, getIsButtonActive, handleClick };

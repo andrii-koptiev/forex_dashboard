@@ -1,11 +1,16 @@
-import { redirect } from 'next/navigation';
+import Leaderboard from 'app/ui/Leaderboard';
+import { RouteParams } from 'types';
 
-import { getInitialRedirectUrl } from 'utils';
-
-const UsersPage = async () => {
-  const url = await getInitialRedirectUrl();
-
-  redirect(url);
+const UsersPage = ({ searchParams }: RouteParams) => {
+  return (
+    <Leaderboard
+      page={searchParams?.page}
+      pageSize={searchParams?.pageSize}
+      query={searchParams?.query}
+      sortBy={searchParams?.sortBy}
+      sortOrder={searchParams?.sortOrder}
+    />
+  );
 };
 
 export default UsersPage;

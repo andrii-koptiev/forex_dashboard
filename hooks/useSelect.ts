@@ -1,5 +1,4 @@
 import { SearchParamsEnum, SelectTypeEnum } from 'enums';
-import { useReplaceParamsId } from 'hooks';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useCallback } from 'react';
 import { User } from 'types';
@@ -20,8 +19,7 @@ export const useSelect = ({
 }: UseSelectProps): UseSelectReturnType => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
-  const { handleReplaceId } = useReplaceParamsId();
+  const { replace, push } = useRouter();
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -34,10 +32,10 @@ export const useSelect = ({
         }
         replace(`${pathname}?${params.toString()}`);
       } else {
-        handleReplaceId(event.target.value);
+        push(event.target.value);
       }
     },
-    [searchParams, pathname, replace],
+    [searchParams, selectType, replace, pathname, push],
   );
 
   const defaultValue =
