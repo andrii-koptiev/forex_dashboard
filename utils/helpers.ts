@@ -12,7 +12,7 @@ import {
   UserDB,
   UserSelectOptionsDB,
 } from 'types/database';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, loadInitialUserId } from 'utils';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
   Math.abs(dataArray.reduce((acc, curr) => acc + curr));
@@ -73,7 +73,6 @@ export const formatCurrency = (amount: number, isAbs = true): string => {
 export const getPageSizeSelectOptions = (
   start: number,
   end: number,
-  step = 1,
 ): SelectOption[] => {
   let i = start;
   const options: SelectOption[] = [];
@@ -90,11 +89,10 @@ export const getPageSizeSelectOptions = (
 };
 
 export const getInitialRedirectUrl = async (): Promise<string> => {
-  const initialUserId = await loadInitialUserId();
   const initialPageSize = DEFAULT_PAGE_SIZE;
   const initialPage = DEFAULT_PAGE;
 
-  return `${process.env.BASE_URL}/users/${initialUserId}?${SearchParamsEnum.PAGE_SIZE}=${initialPageSize}&${SearchParamsEnum.PAGE}=${initialPage}`;
+  return `${process.env.BASE_URL}/users?${SearchParamsEnum.PAGE_SIZE}=${initialPageSize}&${SearchParamsEnum.PAGE}=${initialPage}`;
 };
 
 export const getFromToUsers = (

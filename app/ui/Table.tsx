@@ -1,9 +1,9 @@
 import { UsersTableColumnNameEnum } from 'enums';
+import Link from 'next/link';
 import { NO_RESULTS, formatCurrency } from 'utils';
 import { loadFilteredUsers } from 'utils/api-helpers';
 import Pagination from './Pagination';
 import Sort from './Sort';
-import TableLink from './TableLink';
 
 type Props = {
   pageSize: string;
@@ -48,7 +48,13 @@ const Table = async ({ pageSize, query, page, sortBy, sortOrder }: Props) => {
                   key={user.id}
                   className={`h-10 sm-text-grey  ${i % 2 === 0 ? 'bg-green-700' : 'bg-green-800'} ${i !== array.length - 1 ? 'border-b border-dark-grey' : ''}`}
                 >
-                  <TableLink name={user.fullName} id={user.id} />
+                  <th
+                    scope='row'
+                    className='px-2.5 cursor-pointer hover:text-sky-700 transition duration-100 ease-in-out'
+                  >
+                    <Link href={`users/${user.id}`}>{user.fullName}</Link>
+                  </th>
+
                   <td className='px-2.5 w-64'>{formatCurrency(user.profit)}</td>
                   <td className='px-2.5 w-64'>{formatCurrency(user.loss)}</td>
                   <td
