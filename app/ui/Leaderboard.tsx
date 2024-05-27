@@ -25,9 +25,7 @@ type Props = {
 const LeaderBoard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
   const selectOptions = getPageSizeSelectOptions(5, 20);
   return (
-    <div
-      className={`user-info-section-container`}
-    >
+    <div className='user-info-section-container'>
       <div className='user-info-section-header-container'>
         <LeaderBoardIcon />
         <div className='user-info-section-header-name'>

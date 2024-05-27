@@ -6,7 +6,7 @@ import { FC } from 'react';
 type Props = {
   buttonText: string;
   hrefLink?: string;
-  handleClick?: () => void;
+  handleClick?: (() => void) | (() => Promise<void>);
 };
 
 const Button: FC<Props> = ({ buttonText, handleClick, hrefLink = ' ' }) => {
@@ -15,7 +15,7 @@ const Button: FC<Props> = ({ buttonText, handleClick, hrefLink = ' ' }) => {
       <button
         type='button'
         className='focus:outline-none text-black  bg-beige hover:opacity-50 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2'
-        onClick={handleClick}
+        onClick={handleClick ? () => handleClick() : () => {}}
       >
         {buttonText}
       </button>
