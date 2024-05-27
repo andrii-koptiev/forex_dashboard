@@ -1,21 +1,32 @@
-import users from 'data/users.json';
-
+import prisma from 'lib/prisma';
 import { type NextRequest } from 'next/server';
-import {
-  formatSelectedUsersData,
-  getActiveUser,
-  getUsersSelectOption,
-} from 'utils';
+import { SelectOption, User } from 'types';
+import { getChartData, getUsersSelectOption } from 'utils';
 
-export const GET = (request: NextRequest) => {
-  const formattedUsers = formatSelectedUsersData(users);
+export const GET = async (request: NextRequest) => {
   const userId = request.nextUrl.pathname.split('/').at(-1);
 
-  const userSelectOptions = getUsersSelectOption(formattedUsers);
-  const selectedUser = getActiveUser(formattedUsers, userId);
+  const selectedUser: User | null = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  const selectOptions: Pick<User, 'id' | 'fullName'>[] =
+    await prisma.user.findMany({
+      select: {
+        id: true,
+        fullName: true,
+      },
+    });
+
+  const userSelectOptions: SelectOption[] = getUsersSelectOption(selectOptions);
 
   return Response.json({
-    userSelectOptions: userSelectOptions,
-    selectedUser: selectedUser,
+    userSelectOptions,
+    selectedUser,
+    chartData: selectedUser
+      ? getChartData(selectedUser.profit, selectedUser.loss)
+      : [],
   });
 };

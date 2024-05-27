@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import {
   OVERVIEW_HEADER_NAME,
   USER_SELECT_LEFT_LABEL_NAME,
+  getSumFormArray,
   loadSelectedUser,
 } from 'utils';
 import InfoSection from './InfoSection';
@@ -17,7 +18,12 @@ type Props = {
 const Chart = dynamic(() => import('./Chart'), { ssr: false });
 
 const Overview = async ({ userId }: Props) => {
-  const { selectedUser, userSelectOptions } = await loadSelectedUser(userId);
+  const { selectedUser, userSelectOptions, chartData } =
+    await loadSelectedUser(userId);
+
+  const profitAmount = getSumFormArray(selectedUser.profit);
+  const lossAmount = getSumFormArray(selectedUser.loss);
+  const balanceAmount = profitAmount - lossAmount;
 
   return (
     <div className={`user-info-section-container user-info-section-container`}>
@@ -38,20 +44,17 @@ const Overview = async ({ userId }: Props) => {
       </div>
       <div className='flex w-full justify-between'>
         <div className='flex w-full h-full'>
-          <Chart data={selectedUser.chartData} />
+          <Chart data={chartData} />
         </div>
         <div className='flex flex-col gap-4'>
           <InfoSection
             type={InfoSectionTypeEnum.PROFIT}
-            amount={selectedUser.profit}
+            amount={profitAmount}
           />
-          <InfoSection
-            type={InfoSectionTypeEnum.LOSS}
-            amount={selectedUser.loss}
-          />
+          <InfoSection type={InfoSectionTypeEnum.LOSS} amount={lossAmount} />
           <InfoSection
             type={InfoSectionTypeEnum.BALANCE}
-            amount={selectedUser.balance}
+            amount={balanceAmount}
           />
         </div>
       </div>
