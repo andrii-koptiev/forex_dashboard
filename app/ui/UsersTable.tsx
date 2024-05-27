@@ -31,12 +31,12 @@ const UsersTable = async ({
   return (
     <>
       <div
-        className='dynamic-table relative overflow-x-auto sm:rounded-md mb-4 dynamic-tbody'
+        className='relative overflow-auto sm:rounded-md mb-4 dynamic-tbody flex-1'
         style={{ '--page-size': pageSize } as React.CSSProperties}
       >
         {users.length ? (
-          <table className='w-full text-left'>
-            <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize'>
+          <table className='w-full text-left table-fixed'>
+            <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize sticky top-0'>
               <tr>
                 {usersTableHeaderData.map(({ columnName, sortQuery }) => (
                   <th key={columnName} scope='col' className='px-2.5 h-10'>
@@ -86,7 +86,7 @@ const UsersTable = async ({
           <div className='base-text-grey flex w-full h-full justify-center items-center'>{`${NO_RESULTS} "${query}"`}</div>
         )}
       </div>
-      {users.length ? <Pagination paginationData={pagination} /> : null}
+      <Pagination paginationData={pagination} />
     </>
   );
 };

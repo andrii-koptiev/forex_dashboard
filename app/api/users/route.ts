@@ -5,6 +5,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, getPaginationButtons } from 'utils';
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
+
   const query = searchParams.get(SearchParamsEnum.QUERY);
   const pageSize =
     searchParams.get(SearchParamsEnum.PAGE_SIZE) || DEFAULT_PAGE_SIZE;

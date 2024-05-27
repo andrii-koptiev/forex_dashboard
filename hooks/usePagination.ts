@@ -1,6 +1,6 @@
 import { PaginationButtonTypeEnum, SearchParamsEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PaginationData } from 'types';
 import { DEFAULT_PAGE } from 'utils';
 
@@ -11,6 +11,8 @@ type UsePaginationProps = {
 };
 
 type UsePaginationReturnType = {
+  isPrevDisabled: boolean;
+  isNextDisabled: boolean;
   getInfoString: () => string;
   getIsButtonActive: (page: string) => boolean;
   handleClick: (buttonType: PaginationButtonTypeEnum, page?: string) => void;
@@ -24,12 +26,19 @@ export const usePagination = ({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [isPrevDisabled, setIsPrevDisabled] = useState(false);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
 
   const params = useMemo(() => {
     return new URLSearchParams(searchParams);
   }, [searchParams]);
 
   const currentPage = params.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
+
+  useEffect(() => {
+    setIsPrevDisabled(Number(currentPage) === buttons[0]);
+    setIsNextDisabled(Number(currentPage) === buttons.at(-1));
+  }, [buttons, currentPage]);
 
   const getIsButtonActive = useCallback(
     (page: string) => page === String(currentPage),
@@ -66,5 +75,11 @@ export const usePagination = ({
     [buttons.length, currentPage, params, pathname, replace],
   );
 
-  return { getInfoString, getIsButtonActive, handleClick };
+  return {
+    isPrevDisabled,
+    isNextDisabled,
+    getInfoString,
+    getIsButtonActive,
+    handleClick,
+  };
 };

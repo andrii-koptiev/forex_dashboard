@@ -9,10 +9,10 @@ import {
 } from 'utils';
 
 import { SelectTypeEnum } from 'enums';
+import LeaderBoardIcon from 'icons/LeaderboardIcon';
 import Search from './Search';
 import Select from './Select';
 import Table from './UsersTable';
-import LeaderBoardIcon from 'icons/LeaderBoardIcon';
 
 type Props = {
   pageSize?: string;
@@ -25,7 +25,9 @@ type Props = {
 const LeaderBoard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
   const selectOptions = getPageSizeSelectOptions(5, 20);
   return (
-    <div className={`user-info-section-container user-info-section-container`}>
+    <div
+      className={`user-info-section-container`}
+    >
       <div className='user-info-section-header-container'>
         <LeaderBoardIcon />
         <div className='user-info-section-header-name'>

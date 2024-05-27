@@ -26,7 +26,7 @@ const Overview = async ({ userId }: Props) => {
   const balanceAmount = profitAmount - lossAmount;
 
   return (
-    <div className={`user-info-section-container user-info-section-container`}>
+    <div className='user-info-section-container'>
       <div className='user-info-section-header-container'>
         <OverviewIcon />
         <div className='user-info-section-header-name'>
@@ -34,12 +34,13 @@ const Overview = async ({ userId }: Props) => {
         </div>
       </div>
 
-      <div className='user-info-section-top-bar-actions flex-row-reverse'>
+      <div className='user-info-section-top-bar-actions flex-row-reverse mb-24'>
         <Select
           type={SelectTypeEnum.USER_SELECT}
           options={userSelectOptions}
           leftLabelName={USER_SELECT_LEFT_LABEL_NAME}
           selectedUser={selectedUser}
+          width={96}
         />
       </div>
       <div className='flex w-full justify-between'>
