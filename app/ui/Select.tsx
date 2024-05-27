@@ -9,14 +9,14 @@ type Props = {
   options: SelectOption[];
   type: SelectTypeEnum;
   leftLabelName?: string;
-  rigthLabelName?: string;
+  rightLabelName?: string;
   selectedUser?: User;
 };
 
 const Select: FC<Props> = ({
   options,
   leftLabelName,
-  rigthLabelName,
+  rightLabelName,
   type,
   selectedUser,
 }) => {
@@ -47,9 +47,9 @@ const Select: FC<Props> = ({
           </option>
         ))}
       </select>
-      {rigthLabelName ? (
+      {rightLabelName ? (
         <label htmlFor='select' className='flex base-text-grey'>
-          {rigthLabelName}
+          {rightLabelName}
         </label>
       ) : null}
     </form>

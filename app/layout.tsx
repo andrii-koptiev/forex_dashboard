@@ -5,7 +5,7 @@ import './globals.css';
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'FPFX',
+  title: 'Forex-Dashboard',
 };
 
 export default function RootLayout({

@@ -1,9 +1,9 @@
-import Leaderboard from 'app/ui/Leaderboard';
+import LeaderBoard from 'app/ui/LeaderBoard';
 import { RouteParams } from 'types';
 
 const UsersPage = ({ searchParams }: RouteParams) => {
   return (
-    <Leaderboard
+    <LeaderBoard
       page={searchParams?.page}
       pageSize={searchParams?.pageSize}
       query={searchParams?.query}

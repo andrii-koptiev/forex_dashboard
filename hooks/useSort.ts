@@ -1,19 +1,19 @@
 import {
   SearchParamsEnum,
   SortOrderEnum,
-  UsersTableColumnNameEnum,
+  UsersTableColumnSortQueryEnum,
 } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 type UseSortProps = {
-  sortBy: UsersTableColumnNameEnum;
+  sortBy: UsersTableColumnSortQueryEnum;
 };
 
 type UseSortReturnType = {
   handleSort: (event: SortOrderEnum) => void;
   isSortActive: (
-    sortBy: UsersTableColumnNameEnum,
+    sortBy: UsersTableColumnSortQueryEnum,
     sortOrder: SortOrderEnum,
   ) => boolean;
 };
@@ -45,7 +45,7 @@ export const useSort = ({ sortBy }: UseSortProps): UseSortReturnType => {
   );
 
   const isSortActive = useCallback(
-    (sortBy: UsersTableColumnNameEnum, sortOrder: SortOrderEnum) => {
+    (sortBy: UsersTableColumnSortQueryEnum, sortOrder: SortOrderEnum) => {
       const params = new URLSearchParams(searchParams);
       return (
         sortBy === params.get(SearchParamsEnum.SORT_BY) &&

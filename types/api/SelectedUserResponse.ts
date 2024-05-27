@@ -1,6 +1,7 @@
-import { SelectOption, SelectedUser } from 'types';
+import { ChartData, SelectOption, User } from 'types';
 
 export interface SelectedUserResponse {
   userSelectOptions: SelectOption[];
-  selectedUser: SelectedUser;
+  selectedUser: User;
+  chartData: ChartData[];
 }

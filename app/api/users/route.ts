@@ -1,48 +1,73 @@
-import users from 'data/users.json';
 import { SearchParamsEnum } from 'enums';
+import prisma from 'lib/prisma';
 import { type NextRequest } from 'next/server';
-import { FormattedUserDB } from 'types/database';
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  formatUsersData,
-  getChunckedUsers,
-  getPaginationData,
-  sortUsersBy,
-} from 'utils';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, getPaginationButtons } from 'utils';
 
-export const GET = (request: NextRequest) => {
-  const formattedUsers = formatUsersData(users);
-  let filteredUsers: FormattedUserDB[] = [];
-  let chunkedUsers: FormattedUserDB[][] = [];
-
+export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
+  const query = searchParams.get(SearchParamsEnum.QUERY);
   const pageSize =
     searchParams.get(SearchParamsEnum.PAGE_SIZE) || DEFAULT_PAGE_SIZE;
   const page = searchParams.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
-  const query = searchParams.get(SearchParamsEnum.QUERY);
   const sortBy = searchParams.get(SearchParamsEnum.SORT_BY);
   const sortOrder = searchParams.get(SearchParamsEnum.SORT_ORDER);
 
-  filteredUsers = query
-    ? formattedUsers.filter((user) =>
-        user.fullName.toLowerCase().includes(query.toLowerCase()),
-      )
-    : formattedUsers;
+  const totalFilteredUsersCount = await prisma.user.count({
+    where: query
+      ? {
+          OR: [
+            {
+              name: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+            {
+              lastname: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        }
+      : {},
+  });
 
-  filteredUsers = sortUsersBy(filteredUsers, sortBy, sortOrder);
-  chunkedUsers = getChunckedUsers(filteredUsers, Number(pageSize));
+  const skip = (Number(page) - 1) * Number(pageSize);
+  const remainingUsers = totalFilteredUsersCount - skip;
+  const take =
+    remainingUsers < Number(pageSize) ? remainingUsers : Number(pageSize);
 
-  const resultUsers = chunkedUsers[Number(page) - 1] || [];
-
-  const paginationData = getPaginationData(
-    filteredUsers,
-    chunkedUsers,
-    String(page),
-  );
+  const filteredUsers = await prisma.user.findMany({
+    skip: skip,
+    take: take,
+    where: query
+      ? {
+          OR: [
+            {
+              name: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+            {
+              lastname: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        }
+      : {},
+    orderBy: sortBy ? { [sortBy]: sortOrder } : {},
+  });
 
   return Response.json({
-    users: resultUsers,
-    pagination: paginationData,
+    users: filteredUsers,
+    pagination: {
+      buttons: getPaginationButtons(totalFilteredUsersCount, Number(pageSize)),
+      totalUsers: totalFilteredUsersCount,
+      displayedInfo: [skip + 1, skip + filteredUsers.length],
+    },
   });
 };

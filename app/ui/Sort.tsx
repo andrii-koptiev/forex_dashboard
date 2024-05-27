@@ -1,12 +1,15 @@
 'use client';
-import { SortOrderEnum, UsersTableColumnNameEnum } from 'enums';
+import {
+  SortOrderEnum,
+  UsersTableColumnSortQueryEnum,
+} from 'enums';
 import { useSort } from 'hooks';
 import SortAscIcon from 'icons/SortAscIcon';
 import SortDescIcon from 'icons/SortDescIcon';
 import { FC, memo } from 'react';
 
 type Props = {
-  sortBy: UsersTableColumnNameEnum;
+  sortBy: UsersTableColumnSortQueryEnum;
 };
 
 export const Sort: FC<Props> = ({ sortBy }) => {
