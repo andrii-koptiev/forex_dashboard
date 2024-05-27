@@ -2,7 +2,7 @@
 
 import { COMMON_ERROR_MESSAGE } from 'utils';
 
-export const resetDatabase = async () => {
+export const deleteUserById = async (userId: string) => {
   const baseUrl = process.env.BASE_URL;
 
   if (!baseUrl) {
@@ -10,16 +10,16 @@ export const resetDatabase = async () => {
   }
 
   try {
-    const response = await fetch(`${baseUrl}/api/database/reset`, {
-      method: 'POST', // Assuming POST is appropriate for a reset operation
+    const response = await fetch(`${baseUrl}/api/users/${userId}`, {
+      method: 'DELETE',
       cache: 'no-store',
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to reset database: ${response.statusText}`);
+      throw new Error(`Failed to delete user: ${response.statusText}`);
     }
 
-    console.log('Database reset to initial data');
+    console.log('User deleted successfully');
   } catch (e) {
     console.error(e);
     throw new Error(COMMON_ERROR_MESSAGE);

@@ -79,7 +79,7 @@ const UsersTable = async ({
                       {formatCurrency(balanceAmount)}
                     </td>
                     <td className='px-2.5 w-8'>
-                      <UsersTableActions />
+                      <UsersTableActions userId={user.id} />
                     </td>
                   </tr>
                 );
