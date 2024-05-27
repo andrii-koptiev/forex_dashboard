@@ -2,9 +2,9 @@ import { SVGProps } from 'react';
 const SortDescIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    width={'7px'}
-    height={'4px'}
-    fill='none'
+    width={'12px'}
+    height={'12px'}
+    viewBox='0 0 7 4'
     {...props}
   >
     <g clipPath='url(#a)'>

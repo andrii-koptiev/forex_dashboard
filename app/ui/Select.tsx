@@ -11,6 +11,7 @@ type Props = {
   leftLabelName?: string;
   rightLabelName?: string;
   selectedUser?: User;
+  width?: number;
 };
 
 const Select: FC<Props> = ({
@@ -19,6 +20,7 @@ const Select: FC<Props> = ({
   rightLabelName,
   type,
   selectedUser,
+  width = 20,
 }) => {
   const { defaultValue, handleChange } = useSelect({
     selectType: type,
@@ -37,7 +39,7 @@ const Select: FC<Props> = ({
 
       <select
         id='select'
-        className={` select ${type === SelectTypeEnum.USER_SELECT ? 'user-select' : ''}`}
+        className={`select w-${width} ${type === SelectTypeEnum.USER_SELECT ? 'user-select' : ''}`}
         defaultValue={defaultValue}
         onChange={handleChange}
       >

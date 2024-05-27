@@ -3,8 +3,9 @@ import { SVGProps } from 'react';
 const SortAscIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    width={'7px'}
-    height={'4px'}
+    width={'12px'}
+    height={'12px'}
+    viewBox='0 0 7 4'
     fill='none'
     {...props}
   >

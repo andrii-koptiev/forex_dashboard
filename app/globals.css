@@ -5,7 +5,8 @@
 body {
   display: flex;
   justify-content: center;
-  padding: 150px 0;
+  padding: 56px 32px;
+  height: 100vh;
 }
 
 input:focus,
@@ -25,11 +26,9 @@ button:focus {
   }
 
   .user-info-section-container {
-    @apply w-1200px rounded-lg bg-dark-green px-5 pt-2.5 pb-5;
+    @apply rounded-lg bg-dark-green px-5 pt-2.5 pb-5  w-full min-w-[1200px] flex flex-col max-h-screen overflow-auto h-screen;
   }
-  .user-info-section-container {
-    @apply h-max;
-  }
+
   .user-info-section-header-container {
     @apply flex items-center gap-2 mb-4;
   }
@@ -40,12 +39,8 @@ button:focus {
     @apply flex justify-between mb-2.5;
   }
 
-  .dynamic-table {
-    height: calc(var(--page-size) * 40px + 40px);
-  }
-
   .pagination-button {
-    @apply bg-green-700 px-2 py-1 rounded-sm capitalize hover:bg-sky-700 transition duration-100 ease-in-out;
+    @apply bg-green-700 px-2 py-1 rounded-sm capitalize hover:enabled:bg-sky-700 enabled:transition enabled:duration-100 ease-in-out disabled:opacity-20;
   }
 
   .select {

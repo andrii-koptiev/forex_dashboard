@@ -2,6 +2,7 @@ import { SearchParamsEnum, SelectTypeEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useCallback } from 'react';
 import { User } from 'types';
+import { DEFAULT_PAGE } from 'utils';
 
 type UseSelectProps = {
   selectType: SelectTypeEnum;
@@ -25,11 +26,8 @@ export const useSelect = ({
     (event: ChangeEvent<HTMLSelectElement>) => {
       const params = new URLSearchParams(searchParams);
       if (selectType === SelectTypeEnum.PAGE_SIZE_SELECT) {
-        if (event.target.value) {
-          params.set(SearchParamsEnum.PAGE_SIZE, event.target.value);
-        } else {
-          params.delete(SearchParamsEnum.PAGE_SIZE);
-        }
+        params.set(SearchParamsEnum.PAGE_SIZE, event.target.value);
+        params.set(SearchParamsEnum.PAGE, String(DEFAULT_PAGE));
         replace(`${pathname}?${params.toString()}`);
       } else {
         push(event.target.value);
