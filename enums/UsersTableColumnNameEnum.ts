@@ -3,4 +3,5 @@ export enum UsersTableColumnNameEnum {
   PROFIT = 'profit',
   LOSS = 'loss',
   BALANCE = 'balance',
+  ACTIONS = '',
 }

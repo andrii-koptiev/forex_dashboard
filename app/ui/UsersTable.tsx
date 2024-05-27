@@ -4,6 +4,7 @@ import { NO_RESULTS, formatCurrency, getSumFormArray } from 'utils';
 import { loadFilteredUsers } from 'utils/api-helpers';
 import Pagination from './Pagination';
 import Sort from './Sort';
+import UsersTableActions from './features/usersTable/UsersTableActions';
 
 type Props = {
   pageSize: string;
@@ -35,12 +36,12 @@ const UsersTable = async ({
         style={{ '--page-size': pageSize } as React.CSSProperties}
       >
         {users.length ? (
-          <table className='w-full text-left table-fixed'>
+          <table className='w-full text-left table-auto'>
             <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize sticky top-0'>
               <tr>
                 {usersTableHeaderData.map(({ columnName, sortQuery }) => (
                   <th key={columnName} scope='col' className='px-2.5 h-10'>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex align-center justify-between'>
                       {columnName}
                       {sortQuery && <Sort sortBy={sortQuery} />}
                     </div>
@@ -76,6 +77,9 @@ const UsersTable = async ({
                       className={`px-2.5 w-64 ${balanceAmount >= 0 ? 'text-light-green' : 'text-light-red'}`}
                     >
                       {formatCurrency(balanceAmount)}
+                    </td>
+                    <td className='px-2.5 w-8'>
+                      <UsersTableActions />
                     </td>
                   </tr>
                 );

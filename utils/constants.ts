@@ -11,6 +11,8 @@ export const COMMON_ERROR_MESSAGE =
   'Error. Please try again or contact support';
 export const BACK_TO_LEADER_BOARD_BUTTON = 'Back to leaderboard';
 export const RESET_DATABASE_BUTTON = 'Reset database';
+export const EDIT_USER_TITLE = 'Edit user'
+export const REMOVE_USER_TITLE = 'Remove user';
 
 // Logic
 export const DEFAULT_PAGE_SIZE = 10;
