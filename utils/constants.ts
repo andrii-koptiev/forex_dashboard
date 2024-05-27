@@ -9,6 +9,7 @@ export const NO_RESULTS = 'No results for';
 export const RETRY_BUTTON = 'Try again';
 export const COMMON_ERROR_MESSAGE =
   'Error. Please try again or contact support';
+export const BACK_TO_LEADER_BOARD_BUTTON = 'Back to leaderboard';
 
 // Logic
 export const DEFAULT_PAGE_SIZE = 10;
