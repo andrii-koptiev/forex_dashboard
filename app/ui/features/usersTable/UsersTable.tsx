@@ -1,10 +1,10 @@
+import { loadUsers } from 'app/actions/loadUsers';
+import Pagination from 'app/ui/Pagination';
+import Sort from 'app/ui/Sort';
 import { usersTableHeaderData } from 'data/usersTableHeaderData';
 import Link from 'next/link';
 import { NO_RESULTS, formatCurrency, getSumFormArray } from 'utils';
-import { loadFilteredUsers } from 'utils/api-helpers';
-import Pagination from './Pagination';
-import Sort from './Sort';
-import UsersTableActions from './features/usersTable/UsersTableActions';
+import UsersTableActions from './UsersTableActions';
 
 type Props = {
   pageSize: string;
@@ -21,7 +21,7 @@ const UsersTable = async ({
   sortBy,
   sortOrder,
 }: Props) => {
-  const { users, pagination } = await loadFilteredUsers({
+  const { users, pagination } = await loadUsers({
     pageSize,
     page,
     query,

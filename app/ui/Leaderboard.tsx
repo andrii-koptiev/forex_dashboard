@@ -9,10 +9,10 @@ import {
 } from 'utils';
 
 import { SelectTypeEnum } from 'enums';
-import LeaderBoardIcon from 'icons/LeaderboardIcon';
+import LeaderBoardIcon from 'icons/LeaderBoardIcon';
 import Search from './Search';
 import Select from './Select';
-import Table from './UsersTable';
+import UsersTable from './features/usersTable/UsersTable';
 
 type Props = {
   pageSize?: string;
@@ -42,7 +42,7 @@ const LeaderBoard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
         />
         <Search placeholder={USERS_SEARCH_PLACEHOLDER} />
       </div>
-      <Table
+      <UsersTable
         page={page || String(DEFAULT_PAGE)}
         pageSize={pageSize || String(DEFAULT_PAGE_SIZE)}
         query={query}

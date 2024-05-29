@@ -1,17 +1,8 @@
 import { SearchParamsEnum } from 'enums';
-import { FilteredUsersResponse, SelectedUserResponse } from 'types/api';
+import { FilteredUsersResponse, RequestParams } from 'types/api';
 import { COMMON_ERROR_MESSAGE } from 'utils';
 
-type RequestParams = {
-  userId?: string;
-  pageSize?: string;
-  page?: string;
-  query?: string;
-  sortBy?: string;
-  sortOrder?: string;
-};
-
-export const loadFilteredUsers = async ({
+export const loadUsers = async ({
   pageSize,
   page,
   query,
@@ -38,20 +29,6 @@ export const loadFilteredUsers = async ({
 
   try {
     const data: FilteredUsersResponse = await res.json();
-    return data;
-  } catch (e) {
-    throw new Error(COMMON_ERROR_MESSAGE);
-  }
-};
-
-export const loadSelectedUser = async (id: RequestParams['userId']) => {
-  const res = await fetch(`${process.env.BASE_URL}/api/users/${id}`, {
-    cache: 'no-store',
-  });
-
-  try {
-    const data: SelectedUserResponse = await res.json();
-
     return data;
   } catch (e) {
     throw new Error(COMMON_ERROR_MESSAGE);
