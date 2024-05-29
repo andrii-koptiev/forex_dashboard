@@ -26,7 +26,7 @@ type Props = {
 };
 
 const UsersTable = ({ pageSize, query, page, sortBy, sortOrder }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [usersResponse, setUsersResponse] =
     useState<FilteredUsersResponse | null>(null);
 
@@ -74,7 +74,7 @@ const UsersTable = ({ pageSize, query, page, sortBy, sortOrder }: Props) => {
       >
         <>
           {isLoading ? (
-            <div className='flex h-full justify-center items-center'>
+            <div className='flex h-full w-full justify-center items-center'>
               <Loader />
             </div>
           ) : usersResponse?.users.length ? (
@@ -129,11 +129,15 @@ const UsersTable = ({ pageSize, query, page, sortBy, sortOrder }: Props) => {
               </tbody>
             </table>
           ) : (
-            <div className='base-text-grey flex w-full h-full justify-center items-center'>{`${NO_RESULTS} "${query}"`}</div>
+            <>
+              {!isLoading && (
+                <div className='base-text-grey flex w-full h-full justify-center items-center'>{`${NO_RESULTS} "${query}"`}</div>
+              )}
+            </>
           )}
         </>
       </div>
-      <Pagination paginationData={usersResponse?.pagination} />
+      {!isLoading && <Pagination paginationData={usersResponse?.pagination} />}
     </>
   );
 };

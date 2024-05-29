@@ -1,10 +1,10 @@
 import Modal from 'app/ui/Modal';
-import AddUserModal from 'app/ui/features/usersTable/AddUserModal';
+import AddEditUserModal from 'app/ui/features/usersTable/AddEditUserModal';
 
 export default function Page() {
   return (
     <Modal>
-      <AddUserModal />
+      <AddEditUserModal />
     </Modal>
   );
 }

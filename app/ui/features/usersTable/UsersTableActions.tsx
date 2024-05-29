@@ -13,9 +13,12 @@ type Props = {
 const UsersTableActions: FC<Props> = ({ userId }) => {
   return (
     <div className='flex gap-2 justify-center pr-4'>
-      <button title={EDIT_USER_TITLE}>
-        <EditIcon fill={'#F6742A'} />
-      </button>
+      <Link href={`/edit-user/${userId}`}>
+        <button title={EDIT_USER_TITLE}>
+          <EditIcon fill={'#F6742A'} />
+        </button>
+      </Link>
+
       <Link href={`/remove-user/${userId}`}>
         <button title={REMOVE_USER_TITLE}>
           <DeleteIcon fill={'#FF3737'} />

@@ -1,10 +1,12 @@
 'use client';
 
 import { addUser } from 'app/actions/addUser';
+import { editUser } from 'app/actions/editUser';
+import { loadSelectedUser } from 'app/actions/loadSelectedUser';
 import { AppCustomEventsEnum } from 'enums';
 import { useCloseModalListeners } from 'hooks';
 import { useRouter } from 'next/navigation';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   ADD_USER_BUTTON,
   ADD_USER_LASTNAME_LABEL,
@@ -15,7 +17,10 @@ import {
   COMMON_BUTTON_ADD,
   COMMON_BUTTON_ADDING,
   COMMON_BUTTON_CANCEL,
+  COMMON_BUTTON_EDITING,
   COMMON_ERROR_MESSAGE,
+  EDIT_USER_BUTTON,
+  EDIT_USER_MODAL_TITLE,
   formatCurrency,
 } from 'utils';
 
@@ -24,7 +29,11 @@ enum AmountTypeEnum {
   LOSS = 'loss',
 }
 
-export const AddUserModal: FC = () => {
+type Props = {
+  userId?: string;
+};
+
+export const AddEditUserModal: FC<Props> = ({ userId }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,6 +50,7 @@ export const AddUserModal: FC = () => {
 
   useCloseModalListeners(router);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateButtonsSection = (amountType: AmountTypeEnum) => {
     const isProfit = amountType === AmountTypeEnum.PROFIT;
     const buttonsSection = isProfit
@@ -95,7 +105,7 @@ export const AddUserModal: FC = () => {
       return;
     }
 
-    lossDataRef.current.push(Number(lossRef.current.value));
+    lossDataRef.current.push(Number(-lossRef.current.value));
     updateButtonsSection(AmountTypeEnum.LOSS);
     lossRef.current.value = '';
   };
@@ -124,7 +134,8 @@ export const AddUserModal: FC = () => {
     setIsLoading(true);
 
     try {
-      await addUser(userData);
+      userId ? await editUser(userId, userData) : await addUser(userData);
+
       setIsLoading(false);
       document.dispatchEvent(new Event(AppCustomEventsEnum.UPDATE_USERS_TABLE));
       router.back();
@@ -134,6 +145,38 @@ export const AddUserModal: FC = () => {
       throw new Error(COMMON_ERROR_MESSAGE);
     }
   };
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (userId) {
+        try {
+          const { selectedUser: editedUser } = await loadSelectedUser(userId);
+
+          if (nameRef.current) {
+            nameRef.current.value = editedUser.name;
+          }
+
+          if (lastnameRef.current) {
+            lastnameRef.current.value = editedUser.lastname;
+          }
+
+          if (profitDataRef) {
+            profitDataRef.current = editedUser.profit;
+            updateButtonsSection(AmountTypeEnum.PROFIT);
+          }
+
+          if (lossDataRef) {
+            lossDataRef.current = editedUser.loss;
+            updateButtonsSection(AmountTypeEnum.LOSS);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    loadUserData();
+  }, [updateButtonsSection, userId]);
 
   return (
     <div
@@ -153,7 +196,7 @@ export const AddUserModal: FC = () => {
                 className='text-lg font-semibold leading-6 text-gray-900'
                 id='add-user-modal-title'
               >
-                {ADD_USER_MODAL_TITLE}
+                {userId ? EDIT_USER_MODAL_TITLE : ADD_USER_MODAL_TITLE}
               </h3>
             </div>
             <form className='px-12 py-8' onSubmit={handleSubmit}>
@@ -281,10 +324,10 @@ export const AddUserModal: FC = () => {
                           fill='currentColor'
                         />
                       </svg>
-                      {COMMON_BUTTON_ADDING}
+                      {userId ? COMMON_BUTTON_EDITING : COMMON_BUTTON_ADDING}
                     </>
                   ) : (
-                    ADD_USER_BUTTON
+                    <>{userId ? EDIT_USER_BUTTON : ADD_USER_BUTTON}</>
                   )}
                 </button>
               </div>
@@ -296,4 +339,4 @@ export const AddUserModal: FC = () => {
   );
 };
 
-export default AddUserModal;
+export default AddEditUserModal;

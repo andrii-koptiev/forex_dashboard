@@ -14,7 +14,7 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
   }
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 w-full'>
       <div className='flex gap-2'>
         <button
           type='button'
