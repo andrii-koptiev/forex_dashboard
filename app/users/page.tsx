@@ -1,10 +1,10 @@
 import { resetDatabase } from 'app/actions/resetDatabase';
-import Button from 'app/ui/Button';
 import LeaderBoard from 'app/ui/LeaderBoard';
 import { isEmpty } from 'lodash';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { RouteParams } from 'types';
-import { RESET_DATABASE_BUTTON, getInitialRedirectUrl } from 'utils';
+import { ADD_USER, RESET_DATABASE_BUTTON, getInitialRedirectUrl } from 'utils';
 
 const UsersPage = async ({ searchParams }: RouteParams) => {
   if (isEmpty(searchParams)) {
@@ -14,13 +14,25 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
   }
 
   return (
-    <div className='flex flex-col gap-9'>
-      <div className='flex justify-end'>
-        <Button
-          buttonText={RESET_DATABASE_BUTTON}
-          handleClick={resetDatabase}
-        />
+    <div className='flex flex-col gap-4'>
+      <div className='flex gap-2'>
+        <button
+          type='button'
+          className='button text-dark-blue bg-beige w-48'
+          onClick={resetDatabase}
+        >
+          {RESET_DATABASE_BUTTON}
+        </button>
+
+        <Link
+          type='button'
+          className='button text-dark-blue bg-light-green w-48 text-center'
+          href='/add-user'
+        >
+          {ADD_USER}
+        </Link>
       </div>
+
       <LeaderBoard
         page={searchParams?.page}
         pageSize={searchParams?.pageSize}

@@ -36,7 +36,7 @@ const UsersTable = async ({
         style={{ '--page-size': pageSize } as React.CSSProperties}
       >
         {users.length ? (
-          <table className='w-full text-left table-auto'>
+          <table className='w-full text-left table-fixed'>
             <thead className='bg-dark-blue h-10 text-sm font-bold text-grey capitalize sticky top-0'>
               <tr>
                 {usersTableHeaderData.map(({ columnName, sortQuery }) => (

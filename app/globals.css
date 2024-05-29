@@ -51,4 +51,8 @@ button:focus {
   .user-select {
     width: 164px;
   }
+
+  .button {
+    @apply focus:outline-none hover:opacity-50 font-bold rounded-lg text-sm px-5 py-2.5;
+  }
 }

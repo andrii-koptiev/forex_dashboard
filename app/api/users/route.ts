@@ -1,7 +1,10 @@
 import { SearchParamsEnum } from 'enums';
+import { UserActionEnum } from 'enums/api';
 import prisma from 'lib/prisma';
 import { type NextRequest } from 'next/server';
+import { UserRequest } from 'types/api';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, getPaginationButtons } from 'utils';
+import users from '../../../data/users.json';
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
@@ -71,4 +74,37 @@ export const GET = async (request: NextRequest) => {
       displayedInfo: [skip + 1, skip + filteredUsers.length],
     },
   });
+};
+
+export const POST = async (request: NextRequest) => {
+  const { action, userData }: UserRequest = await request.json();
+
+  if (action === UserActionEnum.RESET_USER) {
+    await prisma.user.deleteMany({});
+
+    await prisma.user.createMany({
+      data: users,
+    });
+
+    return Response.json({ message: 'Users reset successfully' });
+  } else if (action === UserActionEnum.ADD_USER) {
+    if (!userData) {
+      return Response.json({ error: 'No user data provided' }, { status: 400 });
+    }
+
+    const { name, lastname, profit, loss } = userData;
+
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        lastname,
+        profit,
+        loss,
+      },
+    });
+
+    return Response.json({ message: 'User added successfully', user: newUser });
+  }
+
+  return Response.json({ error: 'Invalid action' }, { status: 400 });
 };
