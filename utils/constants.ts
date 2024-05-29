@@ -24,6 +24,9 @@ export const ADD_USER_LOSS_LABEL = 'Loss';
 export const ADD_USER_BUTTON = 'Add user';
 export const EDIT_USER_BUTTON = 'Edit user';
 export const EDIT_USER_MODAL_TITLE = 'Edit user';
+export const EMAIL_LABEL = 'Email';
+export const PASSWORD_LABEL = 'Password';
+export const LOGIN_FORM_TITLE = 'Login';
 
 // Common Text
 export const COMMON_BUTTON_CANCEL = 'Cancel';
@@ -32,6 +35,8 @@ export const COMMON_BUTTON_REMOVING = 'Removing...';
 export const COMMON_BUTTON_ADDING = 'Adding...';
 export const COMMON_BUTTON_EDITING = 'Editing...';
 export const COMMON_BUTTON_ADD = 'Add';
+export const COMMON_BUTTON_LOGIN = 'Login';
+export const COMMON_BUTTON_LOGGING_IN = 'Logging in...';
 
 // Logic
 export const DEFAULT_PAGE_SIZE = 10;
