@@ -1,4 +1,4 @@
 export enum UserActionEnum {
-  RESET_USER = 'reset_user',
-  ADD_USER = 'add_user',
+  RESET_DATABASE = 'reset-database',
+  ADD_USER = 'add-user',
 }

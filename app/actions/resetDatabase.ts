@@ -1,23 +1,15 @@
-'use server';
-
 import { UserActionEnum } from 'enums/api';
 import { COMMON_ERROR_MESSAGE } from 'utils';
 
 export const resetDatabase = async () => {
-  const baseUrl = process.env.BASE_URL;
-
-  if (!baseUrl) {
-    throw new Error('BASE_URL is not defined in the environment variables');
-  }
-
   try {
-    const response = await fetch(`${baseUrl}/api/users`, {
+    const response = await fetch('/api/users', {
       method: 'POST',
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ action: UserActionEnum.RESET_USER }),
+      body: JSON.stringify({ action: UserActionEnum.RESET_DATABASE }),
     });
 
     if (!response.ok) {

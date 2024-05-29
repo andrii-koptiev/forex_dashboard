@@ -7,79 +7,90 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, getPaginationButtons } from 'utils';
 import users from '../../../data/users.json';
 
 export const GET = async (request: NextRequest) => {
-  const searchParams = request.nextUrl.searchParams;
+  try {
+    const searchParams = request.nextUrl.searchParams;
 
-  const query = searchParams.get(SearchParamsEnum.QUERY);
-  const pageSize =
-    searchParams.get(SearchParamsEnum.PAGE_SIZE) || DEFAULT_PAGE_SIZE;
-  const page = searchParams.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
-  const sortBy = searchParams.get(SearchParamsEnum.SORT_BY);
-  const sortOrder = searchParams.get(SearchParamsEnum.SORT_ORDER);
+    const query = searchParams.get(SearchParamsEnum.QUERY);
+    const pageSize =
+      searchParams.get(SearchParamsEnum.PAGE_SIZE) || DEFAULT_PAGE_SIZE;
+    const page = searchParams.get(SearchParamsEnum.PAGE) || DEFAULT_PAGE;
+    const sortBy = searchParams.get(SearchParamsEnum.SORT_BY);
+    const sortOrder = searchParams.get(SearchParamsEnum.SORT_ORDER);
 
-  const totalFilteredUsersCount = await prisma.user.count({
-    where: query
-      ? {
-          OR: [
-            {
-              name: {
-                contains: query,
-                mode: 'insensitive',
+    const totalFilteredUsersCount = await prisma.user.count({
+      where: query
+        ? {
+            OR: [
+              {
+                name: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
               },
-            },
-            {
-              lastname: {
-                contains: query,
-                mode: 'insensitive',
+              {
+                lastname: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
               },
-            },
-          ],
-        }
-      : {},
-  });
+            ],
+          }
+        : {},
+    });
 
-  const skip = (Number(page) - 1) * Number(pageSize);
-  const remainingUsers = totalFilteredUsersCount - skip;
-  const take =
-    remainingUsers < Number(pageSize) ? remainingUsers : Number(pageSize);
+    const skip = (Number(page) - 1) * Number(pageSize);
+    const remainingUsers = totalFilteredUsersCount - skip;
+    const take =
+      remainingUsers < Number(pageSize) ? remainingUsers : Number(pageSize);
 
-  const filteredUsers = await prisma.user.findMany({
-    skip: skip,
-    take: take,
-    where: query
-      ? {
-          OR: [
-            {
-              name: {
-                contains: query,
-                mode: 'insensitive',
+    const filteredUsers = await prisma.user.findMany({
+      skip: skip,
+      take: take,
+      where: query
+        ? {
+            OR: [
+              {
+                name: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
               },
-            },
-            {
-              lastname: {
-                contains: query,
-                mode: 'insensitive',
+              {
+                lastname: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
               },
-            },
-          ],
-        }
-      : {},
-    orderBy: sortBy ? { [sortBy]: sortOrder } : {},
-  });
+            ],
+          }
+        : {},
+      orderBy: sortBy ? { [sortBy]: sortOrder } : {},
+    });
 
-  return Response.json({
-    users: filteredUsers,
-    pagination: {
-      buttons: getPaginationButtons(totalFilteredUsersCount, Number(pageSize)),
-      totalUsers: totalFilteredUsersCount,
-      displayedInfo: [skip + 1, skip + filteredUsers.length],
-    },
-  });
+    return Response.json({
+      users: filteredUsers,
+      pagination: {
+        buttons: getPaginationButtons(
+          totalFilteredUsersCount,
+          Number(pageSize),
+        ),
+        totalUsers: totalFilteredUsersCount,
+        displayedInfo: [skip + 1, skip + filteredUsers.length],
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return Response.json(
+      { error: 'An error occurred while fetching users' },
+      { status: 500 },
+    );
+  }
 };
 
 export const POST = async (request: NextRequest) => {
   const { action, userData }: UserRequest = await request.json();
 
-  if (action === UserActionEnum.RESET_USER) {
+  if (action === UserActionEnum.RESET_DATABASE) {
     await prisma.user.deleteMany({});
 
     await prisma.user.createMany({

@@ -1,10 +1,10 @@
-import { resetDatabase } from 'app/actions/resetDatabase';
 import LeaderBoard from 'app/ui/Leaderboard';
+import ResetDatabaseButton from 'app/ui/features/usersTable/ResetDatabaseButton';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { RouteParams } from 'types';
-import { ADD_USER, RESET_DATABASE_BUTTON, getInitialRedirectUrl } from 'utils';
+import { ADD_USER, getInitialRedirectUrl } from 'utils';
 
 const UsersPage = async ({ searchParams }: RouteParams) => {
   if (isEmpty(searchParams)) {
@@ -16,13 +16,7 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
   return (
     <div className='flex flex-col gap-4 w-full'>
       <div className='flex gap-2'>
-        <button
-          type='button'
-          className='button text-dark-blue bg-beige w-48'
-          onClick={resetDatabase}
-        >
-          {RESET_DATABASE_BUTTON}
-        </button>
+        <ResetDatabaseButton  />
 
         <Link
           type='button'
