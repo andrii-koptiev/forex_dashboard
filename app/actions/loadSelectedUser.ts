@@ -1,3 +1,5 @@
+'use server';
+
 import { RequestParams, SelectedUserResponse } from 'types/api';
 import { COMMON_ERROR_MESSAGE } from 'utils';
 

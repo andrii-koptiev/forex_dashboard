@@ -9,7 +9,7 @@ export const loadUsers = async ({
   sortBy,
   sortOrder,
 }: RequestParams) => {
-  let url = `${process.env.BASE_URL}/api/users?${SearchParamsEnum.PAGE}=${page}&${SearchParamsEnum.PAGE_SIZE}=${pageSize}`;
+  let url = `/api/users?${SearchParamsEnum.PAGE}=${page}&${SearchParamsEnum.PAGE_SIZE}=${pageSize}`;
 
   if (query !== undefined) {
     url += `&${SearchParamsEnum.QUERY}=${query}`;

@@ -1,5 +1,5 @@
 import { resetDatabase } from 'app/actions/resetDatabase';
-import LeaderBoard from 'app/ui/LeaderBoard';
+import LeaderBoard from 'app/ui/Leaderboard';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';

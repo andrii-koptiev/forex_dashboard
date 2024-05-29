@@ -1,6 +1,6 @@
-const Loading = () => {
+const Loader = () => {
   return (
-    <div role='status' className='flex h-full justify-center items-center'>
+    <div role='status'>
       <svg
         aria-hidden='true'
         className='w-8 h-8 text-grey animate-spin fill-light-green'
@@ -21,4 +21,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default Loader;

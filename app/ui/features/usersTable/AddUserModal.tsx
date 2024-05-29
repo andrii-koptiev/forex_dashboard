@@ -1,6 +1,8 @@
 'use client';
 
 import { addUser } from 'app/actions/addUser';
+import { AppCustomEventsEnum } from 'enums';
+import { useCloseModalListeners } from 'hooks';
 import { useRouter } from 'next/navigation';
 import { FC, useRef, useState } from 'react';
 import {
@@ -36,6 +38,8 @@ export const AddUserModal: FC = () => {
 
   const lossDataRef = useRef<number[]>([]);
   const lossButtonsSectionRef = useRef<HTMLDivElement>(null);
+
+  useCloseModalListeners(router);
 
   const updateButtonsSection = (amountType: AmountTypeEnum) => {
     const isProfit = amountType === AmountTypeEnum.PROFIT;
@@ -122,6 +126,7 @@ export const AddUserModal: FC = () => {
     try {
       await addUser(userData);
       setIsLoading(false);
+      document.dispatchEvent(new Event(AppCustomEventsEnum.UPDATE_USERS_TABLE));
       router.back();
     } catch (e) {
       setIsLoading(false);
@@ -136,6 +141,7 @@ export const AddUserModal: FC = () => {
       aria-labelledby='modal-title'
       role='dialog'
       aria-modal='true'
+      id='blur'
     >
       <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
 

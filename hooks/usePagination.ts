@@ -5,9 +5,9 @@ import { PaginationData } from 'types';
 import { DEFAULT_PAGE } from 'utils';
 
 type UsePaginationProps = {
-  totalUsers: PaginationData['totalUsers'];
-  displayedInfo: PaginationData['displayedInfo'];
-  buttons: PaginationData['buttons'];
+  totalUsers?: PaginationData['totalUsers'];
+  displayedInfo?: PaginationData['displayedInfo'];
+  buttons?: PaginationData['buttons'];
 };
 
 type UsePaginationReturnType = {
@@ -19,9 +19,9 @@ type UsePaginationReturnType = {
 };
 
 export const usePagination = ({
-  totalUsers,
-  displayedInfo,
-  buttons,
+  totalUsers = 0,
+  displayedInfo = [],
+  buttons = [],
 }: UsePaginationProps): UsePaginationReturnType => {
   const searchParams = useSearchParams();
   const pathname = usePathname();

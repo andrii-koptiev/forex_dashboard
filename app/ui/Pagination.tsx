@@ -6,7 +6,7 @@ import { FC, memo } from 'react';
 import { PaginationData } from 'types';
 
 type Props = {
-  paginationData: PaginationData;
+  paginationData?: PaginationData;
 };
 
 const Pagination: FC<Props> = ({ paginationData }) => {
@@ -17,9 +17,9 @@ const Pagination: FC<Props> = ({ paginationData }) => {
     isNextDisabled,
     isPrevDisabled,
   } = usePagination({
-    totalUsers: paginationData.totalUsers,
-    displayedInfo: paginationData.displayedInfo,
-    buttons: paginationData.buttons,
+    totalUsers: paginationData?.totalUsers,
+    displayedInfo: paginationData?.displayedInfo,
+    buttons: paginationData?.buttons,
   });
 
   return (
@@ -33,7 +33,7 @@ const Pagination: FC<Props> = ({ paginationData }) => {
         >
           {PaginationButtonTypeEnum.PREV}
         </button>
-        {paginationData.buttons.map((item) => (
+        {paginationData?.buttons.map((item) => (
           <button
             key={item}
             disabled={getIsButtonActive(String(item))}

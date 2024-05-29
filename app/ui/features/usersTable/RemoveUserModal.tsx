@@ -1,6 +1,8 @@
 'use client';
 
 import { deleteUserById } from 'app/actions/deleteUserById';
+import { AppCustomEventsEnum } from 'enums';
+import { useCloseModalListeners } from 'hooks';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import {
@@ -26,6 +28,7 @@ const RemoveUserModal: FC<Props> = ({ userId }) => {
     try {
       await deleteUserById(userId);
       setIsLoading(false);
+      document.dispatchEvent(new Event(AppCustomEventsEnum.UPDATE_USERS_TABLE));
       router.back();
     } catch (e) {
       setIsLoading(false);
@@ -35,6 +38,9 @@ const RemoveUserModal: FC<Props> = ({ userId }) => {
   };
 
   const handleCancel = () => router.back();
+
+  useCloseModalListeners(router);
+
   return (
     <div
       className='relative z-10'
@@ -42,7 +48,10 @@ const RemoveUserModal: FC<Props> = ({ userId }) => {
       role='dialog'
       aria-modal='true'
     >
-      <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
+      <div
+        id='blur'
+        className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
+      ></div>
 
       <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
         <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>

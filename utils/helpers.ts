@@ -3,7 +3,7 @@ import { ChartData, SelectOption, User } from 'types';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'utils';
 
 export const getSumFormArray = (dataArray: number[]): number =>
-  Math.abs(dataArray.reduce((acc, curr) => acc + curr));
+  Math.abs(dataArray.reduce((acc, curr) => acc + curr, 0));
 
 export const getChartData = (
   profit: User['profit'],
