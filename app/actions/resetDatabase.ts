@@ -1,15 +1,24 @@
-'use server';
-
+import { UserActionEnum } from 'enums/api';
 import { COMMON_ERROR_MESSAGE } from 'utils';
 
 export const resetDatabase = async () => {
-  await fetch(`${process.env.BASE_URL}/api/database/reset`, {
-    cache: 'no-store',
-  });
-
   try {
-    console.log('Database updated to initial data');
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ action: UserActionEnum.RESET_DATABASE }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to reset database: ${response.statusText}`);
+    }
+
+    console.log('Database reset to initial data');
   } catch (e) {
+    console.error(e);
     throw new Error(COMMON_ERROR_MESSAGE);
   }
 };

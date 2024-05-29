@@ -2,11 +2,11 @@ import { InfoSectionTypeEnum, SelectTypeEnum } from 'enums';
 import OverviewIcon from 'icons/OverviewIcon';
 import dynamic from 'next/dynamic';
 
+import { loadSelectedUser } from 'app/actions/loadSelectedUser';
 import {
   OVERVIEW_HEADER_NAME,
   USER_SELECT_LEFT_LABEL_NAME,
   getSumFormArray,
-  loadSelectedUser,
 } from 'utils';
 import InfoSection from './InfoSection';
 import Select from './Select';

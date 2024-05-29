@@ -2,7 +2,7 @@ import { SearchParamsEnum, SelectTypeEnum } from 'enums';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useCallback } from 'react';
 import { User } from 'types';
-import { DEFAULT_PAGE } from 'utils';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'utils';
 
 type UseSelectProps = {
   selectType: SelectTypeEnum;
@@ -39,7 +39,8 @@ export const useSelect = ({
   const defaultValue =
     selectType === SelectTypeEnum.USER_SELECT
       ? selectedUser?.id
-      : searchParams.get(SearchParamsEnum.PAGE_SIZE)?.toString();
+      : searchParams.get(SearchParamsEnum.PAGE_SIZE)?.toString() ||
+        String(DEFAULT_PAGE_SIZE);
 
   return { handleChange, defaultValue };
 };

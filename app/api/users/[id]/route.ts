@@ -30,3 +30,60 @@ export const GET = async (request: NextRequest) => {
       : [],
   });
 };
+
+export const PUT = async (request: NextRequest) => {
+  try {
+    const userId = request.nextUrl.pathname.split('/').at(-1);
+    const data = await request.json();
+
+    if (!userId) {
+      return new Response('User ID is required', { status: 400 });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: data,
+    });
+
+    console.log('updatedUser', updatedUser);
+
+    return new Response(JSON.stringify(updatedUser), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error updating user:', error);
+
+    return new Response('Internal Server Error', { status: 500 });
+  }
+};
+
+export const DELETE = async (request: NextRequest) => {
+  try {
+    const userId = request.nextUrl.pathname.split('/').at(-1);
+
+    if (!userId) {
+      return new Response('User ID is required', { status: 400 });
+    }
+
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!deletedUser) {
+      return new Response('User not found', { status: 404 });
+    }
+
+    return new Response('User deleted successfully', { status: 200 });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+
+    return new Response('Internal Server Error', { status: 500 });
+  }
+};

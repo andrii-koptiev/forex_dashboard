@@ -1,3 +1,4 @@
+export * from './AppCustomEventsEnum';
 export * from './InfoSectionTypeEnum';
 export * from './PaginationButtonTypeEnum';
 export * from './SearchParamsEnum';

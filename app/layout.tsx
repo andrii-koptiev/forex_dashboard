@@ -9,13 +9,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  users,
   children,
 }: Readonly<{
+  users: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
     <html lang='en'>
-      <body className={`bg-dark-blue ${openSans.className}`}>{children}</body>
+      <body className={`bg-dark-blue ${openSans.className}`}>
+        {children}
+        {users}
+        <div id='modal-root' />
+      </body>
     </html>
   );
 }

@@ -16,4 +16,7 @@ export const usersTableHeaderData: TableHeaderData[] = [
   {
     columnName: UsersTableColumnNameEnum.BALANCE,
   },
+  {
+    columnName: UsersTableColumnNameEnum.ACTIONS,
+  },
 ];
