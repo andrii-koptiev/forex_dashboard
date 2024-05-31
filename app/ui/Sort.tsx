@@ -1,19 +1,19 @@
 'use client';
-import { SortOrderEnum, UsersTableColumnNameEnum } from 'enums';
+import { SortOrderEnum, UsersTableColumnSortQueryEnum } from 'enums';
 import { useSort } from 'hooks';
 import SortAscIcon from 'icons/SortAscIcon';
 import SortDescIcon from 'icons/SortDescIcon';
 import { FC, memo } from 'react';
 
 type Props = {
-  sortBy: UsersTableColumnNameEnum;
+  sortBy: UsersTableColumnSortQueryEnum;
 };
 
 export const Sort: FC<Props> = ({ sortBy }) => {
   const { handleSort, isSortActive } = useSort({ sortBy });
 
   return (
-    <div className='flex flex-col gap-1'>
+    <div className='flex gap-2'>
       <button onClick={() => handleSort(SortOrderEnum.ASC)}>
         <SortAscIcon
           fill={isSortActive(sortBy, SortOrderEnum.ASC) ? '#0369A1' : undefined}

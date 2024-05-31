@@ -5,4 +5,5 @@ export * from './PaginationData';
 export * from './RouteParams';
 export * from './SelectOption';
 export * from './SelectedUser';
+export * from './TableHeaderData';
 export * from './User';

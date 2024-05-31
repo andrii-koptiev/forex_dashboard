@@ -29,7 +29,7 @@ const Chart: FC<Props> = ({ data }) => {
   return (
     <LineChart
       width={940}
-      height={280}
+      height={400}
       data={data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >

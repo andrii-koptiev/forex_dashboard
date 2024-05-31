@@ -1,4 +1,4 @@
-const Loading = () => {
+const Loader = () => {
   return (
     <div role='status'>
       <svg
@@ -17,9 +17,8 @@ const Loading = () => {
           fill='currentFill'
         />
       </svg>
-      <span className='sr-only'>Loading...</span>
     </div>
   );
 };
 
-export default Loading;
+export default Loader;

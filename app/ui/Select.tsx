@@ -9,16 +9,18 @@ type Props = {
   options: SelectOption[];
   type: SelectTypeEnum;
   leftLabelName?: string;
-  rigthLabelName?: string;
+  rightLabelName?: string;
   selectedUser?: User;
+  width?: number;
 };
 
 const Select: FC<Props> = ({
   options,
   leftLabelName,
-  rigthLabelName,
+  rightLabelName,
   type,
   selectedUser,
+  width = 20,
 }) => {
   const { defaultValue, handleChange } = useSelect({
     selectType: type,
@@ -37,7 +39,7 @@ const Select: FC<Props> = ({
 
       <select
         id='select'
-        className={` select ${type === SelectTypeEnum.USER_SELECT ? 'user-select' : ''}`}
+        className={`select w-${width} ${type === SelectTypeEnum.USER_SELECT ? 'user-select' : ''}`}
         defaultValue={defaultValue}
         onChange={handleChange}
       >
@@ -47,9 +49,9 @@ const Select: FC<Props> = ({
           </option>
         ))}
       </select>
-      {rigthLabelName ? (
+      {rightLabelName ? (
         <label htmlFor='select' className='flex base-text-grey'>
-          {rigthLabelName}
+          {rightLabelName}
         </label>
       ) : null}
     </form>
