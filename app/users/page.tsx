@@ -1,4 +1,4 @@
-import LeaderBoard from 'app/ui/Leaderboard';
+import Leaderboard from 'app/ui/Leaderboard';
 import SignOutButton from 'app/ui/SignOutButton';
 import ResetDatabaseButton from 'app/ui/features/usersTable/ResetDatabaseButton';
 import { isEmpty } from 'lodash';
@@ -33,7 +33,7 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
         </div>
       </div>
 
-      <LeaderBoard
+      <Leaderboard
         page={searchParams?.page}
         pageSize={searchParams?.pageSize}
         query={searchParams?.query}
