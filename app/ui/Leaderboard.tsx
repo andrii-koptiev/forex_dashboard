@@ -9,7 +9,7 @@ import {
 } from 'utils';
 
 import { SelectTypeEnum } from 'enums';
-import LeaderBoardIcon from 'icons/LeaderBoardIcon';
+import LeaderboardIcon from 'icons/LeaderboardIcon';
 import Search from './Search';
 import Select from './Select';
 import UsersTable from './features/usersTable/UsersTable';
@@ -22,12 +22,12 @@ type Props = {
   sortOrder?: string;
 };
 
-const LeaderBoard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
+const Leaderboard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
   const selectOptions = getPageSizeSelectOptions(5, 20);
   return (
     <div className='user-info-section-container'>
       <div className='user-info-section-header-container'>
-        <LeaderBoardIcon />
+        <LeaderboardIcon />
         <div className='user-info-section-header-name'>
           {LEADER_BOARD_HEADER_NAME}
         </div>
@@ -53,4 +53,4 @@ const LeaderBoard = ({ pageSize, page, query, sortBy, sortOrder }: Props) => {
   );
 };
 
-export default LeaderBoard;
+export default Leaderboard;
