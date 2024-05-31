@@ -27,7 +27,6 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
             {ADD_USER}
           </Link>
         </div>
-
         <div className='flex flex-1 justify-end w-full'>
           <SignOutButton />
         </div>
