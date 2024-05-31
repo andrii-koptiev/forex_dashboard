@@ -1,19 +1,21 @@
 'use client';
 
-import { FC, useRef, useState } from 'react';
+import { authenticate } from 'app/actions/authenticate';
+import { FC } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import {
   COMMON_BUTTON_LOGGING_IN,
   COMMON_BUTTON_LOGIN,
   EMAIL_LABEL,
   LOGIN_FORM_TITLE,
   PASSWORD_LABEL,
+  TEST_PASSWORD,
+  TEST_USER_EMAIL,
 } from 'utils';
 
 const LoginForm: FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const { pending } = useFormStatus();
 
   return (
     <div className='flex min-h-full w-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
@@ -26,16 +28,17 @@ const LoginForm: FC = () => {
             {LOGIN_FORM_TITLE}
           </h3>
         </div>
-        <form className='px-12 py-8'>
+        <form className='px-12 py-8' action={dispatch}>
           <div className='mb-5'>
-            <label htmlFor='name' className='block mb-2 text-sm font-medium'>
+            <label htmlFor='email' className='block mb-2 text-sm font-medium'>
               {EMAIL_LABEL}
             </label>
             <input
-              type='text'
-              id='name'
+              id='email'
+              type='email'
+              name='email'
+              defaultValue={TEST_USER_EMAIL}
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark-green focus:border-dark-green block w-full p-2.5'
-              ref={emailRef}
               required
             />
           </div>
@@ -47,20 +50,21 @@ const LoginForm: FC = () => {
               {PASSWORD_LABEL}
             </label>
             <input
+              id='password'
               type='password'
-              id='lastname'
+              name='password'
+              defaultValue={TEST_PASSWORD}
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark-green focus:border-dark-green block w-full p-2.5'
-              ref={passwordRef}
               required
             />
           </div>
           <div className='flex'>
             <button
               type='submit'
-              disabled={isLoading}
-              className='flex flex-1 w-full min-w-36 items-center justify-center rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-50 sm:w-auto'
+              className='flex flex-1 w-full min-w-36 items-center justify-center rounded-md bg-blue-700 px-3 py-3.5 text-sm font-semibold text-white shadow-sm hover:opacity-50 sm:w-auto'
+              disabled={pending}
             >
-              {isLoading ? (
+              {pending ? (
                 <>
                   <svg
                     aria-hidden='true'
@@ -85,6 +89,17 @@ const LoginForm: FC = () => {
                 <>{COMMON_BUTTON_LOGIN}</>
               )}
             </button>
+          </div>
+          <div
+            className='flex h-8 items-end space-x-1'
+            aria-live='polite'
+            aria-atomic='true'
+          >
+            {errorMessage && (
+              <>
+                <p className='text-sm text-light-red'>{errorMessage}</p>
+              </>
+            )}
           </div>
         </form>
       </div>

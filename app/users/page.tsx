@@ -1,4 +1,5 @@
 import LeaderBoard from 'app/ui/Leaderboard';
+import SignOutButton from 'app/ui/SignOutButton';
 import ResetDatabaseButton from 'app/ui/features/usersTable/ResetDatabaseButton';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
@@ -15,16 +16,21 @@ const UsersPage = async ({ searchParams }: RouteParams) => {
 
   return (
     <div className='flex flex-col gap-4 w-full'>
-      <div className='flex gap-2'>
-        <ResetDatabaseButton  />
+      <div className='flex '>
+        <div className='flex gap-4'>
+          <ResetDatabaseButton />
+          <Link
+            type='button'
+            className='button text-dark-blue bg-light-green w-48 text-center'
+            href='/add-user'
+          >
+            {ADD_USER}
+          </Link>
+        </div>
 
-        <Link
-          type='button'
-          className='button text-dark-blue bg-light-green w-48 text-center'
-          href='/add-user'
-        >
-          {ADD_USER}
-        </Link>
+        <div className='flex flex-1 justify-end w-full'>
+          <SignOutButton />
+        </div>
       </div>
 
       <LeaderBoard
