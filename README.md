@@ -21,7 +21,7 @@ Implemented for database management, offering a seamless interaction with Postgr
 #### 5. NextAuth: 
 Provides authorization and route protection to secure the application.
 #### 6. Rechart: 
-Used for demonstartion users data with charts diagrams.
+Used for demonstration users data with charts diagrams.
 
 # Code formatting:
  TSlint, ESLint, Prettier
